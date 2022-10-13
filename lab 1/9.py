@@ -5,7 +5,7 @@ for i in range(128):
 big = 0
 for c in my_str:
     fv[ord(c)] = fv[ord(c)] + 1
-    if (fv[ord(c)] > big):
+    if (fv[ord(c)] > big and c.isalpha()):
         big = fv[ord(c)]
         letter = c
 
