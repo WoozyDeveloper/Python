@@ -9,4 +9,4 @@ def compose(notes, moves, start):
     return ans
 
 
-print(compose(["do", "re", "mi", "fa", "sol"], [1, -3, 4, 2], 2))
+print(compose(["do", "re", "mi", "fa", "sol"], [1, -3, 4, -2000], 2))

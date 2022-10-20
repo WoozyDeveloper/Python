@@ -38,4 +38,4 @@ def find_x_times2(x, *my_lists):
 
 print(find_x_times([[1, 2, 3], [2, 3, 4], [4, 5, 6], [4, 1, "test"]], 2))
 
-print(find_x_times2(2, [1, 2, 3], [2, 3, 4], [4, 5, 6], [4, 1, "test"]))
+print(find_x_times2(2, [1, 2, 3], [2, 3, 4], [4, 5, 6], [5, 1, "test"]))

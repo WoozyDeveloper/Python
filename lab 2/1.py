@@ -1,4 +1,6 @@
 def fibo(dim):
+    if dim < 2:
+        return [1]
     my_list = list()
     a = 1
     b = 1
@@ -14,4 +16,4 @@ def fibo(dim):
     return my_list
 
 
-print(fibo(5))
+print(fibo(2))
