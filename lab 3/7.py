@@ -19,4 +19,4 @@ def f(*sets):
     return d
 
 
-print(f({1, 2}, {2, 3}))
+print(f({1, 2}, {2, 3}, {3, 4}))
