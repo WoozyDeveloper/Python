@@ -16,5 +16,6 @@ def process_item(x):
         x += 1
 
 
-# n = int(input("Enter num:"))
-# print(process_item(n))
+if __name__ == '__main__':
+    n = int(input("Enter num:"))
+    print(process_item(n))
