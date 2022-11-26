@@ -15,6 +15,8 @@ board = Board()
 board.setScreen(screen)
 board.loadCards()
 board.printDeck()
+board.shuffleDeck()
+board.prepareBoard()
 
 while running:
     for event in pygame.event.get():
