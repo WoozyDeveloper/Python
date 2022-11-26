@@ -1,21 +1,19 @@
-import pygame
-import os
-
-from card import Card
 
 """
     This class is used to create a board for the game.
     The board contains the cards that are in the game.
 """
 
+import pygame
+import os
+
+from card import Card
+
 
 class Board:
     _screen = None
-    _cards = None
+    _cards = []
     _cardSlots = None  # the 6 slots with cards
-
-    def __init__(self, cards):
-        self._cards = cards
 
     """
         Setter method for the screen.
@@ -41,8 +39,13 @@ class Board:
                 card = Card("img/" + file, cardColor, cardValue, cardSymbol)
                 self._cards.append(card)
 
+    def printDeck(self):
+        for card in self._cards:
+            print(card)
+
     """
-        Place a card on the board.
+        Place a card on the board on the selected slot.
+        A slot is a place where the player can place a card.
     """
 
     def putCard(self):

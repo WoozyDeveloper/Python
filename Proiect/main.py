@@ -11,11 +11,10 @@ pygame.display.flip()
 
 running = True
 
-card = Card("img/DIAMOND-12.svg", "red", "A", "heart")
-board = Board([card])
-print(card)
+board = Board()
 board.setScreen(screen)
-board.putCard()
+board.loadCards()
+board.printDeck()
 
 while running:
     for event in pygame.event.get():

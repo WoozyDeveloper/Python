@@ -1,3 +1,7 @@
+"""
+    A class that represents a card.
+"""
+
 class Card:
 
     _picture = None  # picture of the card
