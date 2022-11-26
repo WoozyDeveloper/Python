@@ -14,7 +14,7 @@ running = True
 board = Board()
 board.setScreen(screen)
 board.loadCards()
-board.printDeck()
+# board.printDeck()
 board.shuffleDeck()
 board.prepareBoard()
 
@@ -22,3 +22,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            print(board.detectSlotPosition(pos[0], pos[1]))

@@ -27,6 +27,17 @@ class Board:
         self._screen = screen
 
     """
+        Detect on which slot the card goes based on its position
+    """
+
+    def detectSlotPosition(self, x, y):
+        # detect the slot position
+        for i in range(0, 6):
+            if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200 and y > 15 and y < self._screen.get_rect().height / 2:
+                return i
+        return -1
+
+    """
         Load all the cards from the img folder into a deck.
         In each card object put the corresponding picture, color, value and symbol based on the name of the file.
     """
