@@ -11,6 +11,10 @@ import os
 from card import Card
 
 
+YELLOW = (255, 255, 0)
+BLUE = (0, 0, 255)
+
+
 class Board:
     _xSpaceBetweenCards = 300  # space between cards on ox(in pixels)
     # space between cards on oy (when we place them on slots with the first faced forward and the others backwards)
@@ -25,6 +29,20 @@ class Board:
 
     def setScreen(self, screen):
         self._screen = screen
+
+    """
+        Detect the selected card
+    """
+
+    def detectSelectedCard(self, x, y):
+        # detect the slot position
+        for i in range(0, 6):
+            if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200 and y > 15 and y < self._screen.get_rect().height / 2:
+                # if we have at least a card in the slot
+                if (self._cardSlots[i]):
+                    return self._cardSlots[i][-1]  # PUNE POP AICI
+                return 0  # if the slot is empty
+        return -1
 
     """
         Detect on which slot the card goes based on its position
@@ -93,11 +111,31 @@ class Board:
                     faceUp = False
                 else:
                     faceUp = True
+
+                # set the position of the card inside the card object
+                card.setPosition(self._xSpaceBetweenCards *
+                                 i + 20, index * self._ySpaceBetweenCards + 20)
+                card.calculateRect()
+                # put the card on the screen
                 self.putCard(card, self._xSpaceBetweenCards * i +
                              20, index * self._ySpaceBetweenCards + 20, faceUp)
                 print(card)
             print("")
 
+    def redrawBoard(self):
+        for i in range(0, 6):
+            for index, card in enumerate(self._cardSlots[i]):
+                if index < i:
+                    faceUp = False
+                else:
+                    faceUp = True
+
+                # set the position of the card inside the card object
+                card.setPosition(self._xSpaceBetweenCards *
+                                 i + 20, index * self._ySpaceBetweenCards + 20)
+                # put the card on the screen
+                self.putCard(card, self._xSpaceBetweenCards * i +
+                             20, index * self._ySpaceBetweenCards + 20, faceUp)
     """
         Print all the cards in the deck.
     """
