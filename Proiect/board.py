@@ -122,20 +122,12 @@ class Board:
                 print(card)
             print("")
 
-    def redrawBoard(self):
-        for i in range(0, 6):
-            for index, card in enumerate(self._cardSlots[i]):
-                if index < i:
-                    faceUp = False
-                else:
-                    faceUp = True
+    def redrawBoard(self, card, x, y):
 
-                # set the position of the card inside the card object
-                card.setPosition(self._xSpaceBetweenCards *
-                                 i + 20, index * self._ySpaceBetweenCards + 20)
-                # put the card on the screen
-                self.putCard(card, self._xSpaceBetweenCards * i +
-                             20, index * self._ySpaceBetweenCards + 20, faceUp)
+        # set the position of the card inside the card object
+        card.setPosition(card.ox, card.oy)
+        # put the card on the screen
+        self.putCard(card, x, y)
     """
         Print all the cards in the deck.
     """
@@ -170,5 +162,5 @@ class Board:
         else:
             img = pygame.transform.scale(img, (width / 6, height / 6))
 
-        self._screen.blit(img, (ox, oy))
         pygame.display.update()
+        self._screen.blit(img, (ox, oy))
