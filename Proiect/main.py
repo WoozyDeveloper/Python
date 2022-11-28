@@ -44,7 +44,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
-                if card != (0, 0):
+                if card != (0, 0) and rectangle_draging:
                     board.placeCardInSlot(takenFrom, droppedAt, card)
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])
