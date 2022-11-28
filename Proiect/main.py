@@ -1,4 +1,5 @@
 import pygame
+
 from card import Card
 from board import Board
 
@@ -14,6 +15,7 @@ board = Board()
 board.setScreen(screen)
 board.loadCards()
 # board.printDeck()
+
 board.shuffleDeck()
 board.prepareBoard()
 
@@ -33,12 +35,7 @@ while running:
                 print(card)
 
                 if card != -1:
-                    card.calculateRect()
-                    if card.getRect().collidepoint(event.pos):
-                        rectangle_draging = True
-                        mouse_x, mouse_y = event.pos
-                        offset_x = card.ox - mouse_x
-                        offset_y = card.oy - mouse_y
+                    rectangle_draging = True
 
         # releasing the card
         if event.type == pygame.MOUSEBUTTONUP:
@@ -52,13 +49,12 @@ while running:
                 card.getRect().move_ip(pos)
                 if card != (0, 0):
                     card.setPosition(pos[0], pos[1])
-
+                    screen.fill((0, 0, 0))
+                    board.redrawBoard(card, pos[0], pos[1])
+        pygame.display.update()
         # update the screen
-        if card != (0, 0) and rectangle_draging:
-            screen.fill((0, 0, 0))
-            board.redrawBoard(card, pos[0], pos[1])
-            pygame.display.update()
+        # if card != (0, 0) and rectangle_draging:
 
         # constant frame rate
         clock = pygame.time.Clock()
-        clock.tick(120)
+        clock.tick(60)

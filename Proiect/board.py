@@ -132,6 +132,7 @@ class Board:
         for i in range(0, 6):
             print("Slot " + str(i))
             for index, currentCard in enumerate(self._cardSlots[i]):
+                # if card != currentCard:
                 self.putCard(currentCard, currentCard.ox, currentCard.oy)
 
         #         if currentCard != card:
@@ -179,6 +180,5 @@ class Board:
             img = pygame.transform.scale(img, (width / 3, height / 3))
         else:
             img = pygame.transform.scale(img, (width / 6, height / 6))
-
-        pygame.display.update()
+        # pygame.display.update()
         self._screen.blit(img, (ox, oy))
