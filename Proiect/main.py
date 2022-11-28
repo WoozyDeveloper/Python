@@ -7,7 +7,6 @@ pygame.display.set_caption('Solitaire')
 
 (width, height) = (1920, 1080)
 screen = pygame.display.set_mode((width, height))
-pygame.display.flip()
 
 running = True
 
@@ -21,16 +20,18 @@ board.prepareBoard()
 rectangle_draging = False
 card = (0, 0)
 while running:
-
+    pos = pygame.mouse.get_pos()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+        # grabbing the card
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                pos = pygame.mouse.get_pos()
-                print(board.detectSelectedCard(pos[0], pos[1]))
+
                 card = board.detectSelectedCard(pos[0], pos[1])
+                print(card)
+
                 if card != -1:
                     card.calculateRect()
                     if card.getRect().collidepoint(event.pos):
@@ -39,19 +40,25 @@ while running:
                         offset_x = card.ox - mouse_x
                         offset_y = card.oy - mouse_y
 
+        # releasing the card
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
                 print("GATA STOP")
                 rectangle_draging = False
 
+        # moving the card
         if event.type == pygame.MOUSEMOTION:
             if rectangle_draging:
-                card.getRect().move_ip(event.rel)
+                card.getRect().move_ip(pos)
                 if card != (0, 0):
-                    card.setPosition(event.rel[0], event.rel[1])
-                    pos = pygame.mouse.get_pos()
-                    board.redrawBoard(card, pos[0], pos[1])
-        pygame.display.update()
+                    card.setPosition(pos[0], pos[1])
 
+        # update the screen
+        if card != (0, 0) and rectangle_draging:
+            screen.fill((0, 0, 0))
+            board.redrawBoard(card, pos[0], pos[1])
+            pygame.display.update()
+
+        # constant frame rate
         clock = pygame.time.Clock()
-        clock.tick(60)
+        clock.tick(120)

@@ -93,6 +93,7 @@ class Board:
     """
 
     def prepareBoard(self):
+        self._screen.fill((0, 0, 0))
         # create the card slots
         self._cardSlots = []
         for i in range(0, 6):
@@ -112,6 +113,9 @@ class Board:
                 else:
                     faceUp = True
 
+                # place the card with the face up or down
+                card.setFaceUp(faceUp)
+
                 # set the position of the card inside the card object
                 card.setPosition(self._xSpaceBetweenCards *
                                  i + 20, index * self._ySpaceBetweenCards + 20)
@@ -119,15 +123,29 @@ class Board:
                 # put the card on the screen
                 self.putCard(card, self._xSpaceBetweenCards * i +
                              20, index * self._ySpaceBetweenCards + 20, faceUp)
-                print(card)
-            print("")
+                # print(card)
+            # print("")
 
     def redrawBoard(self, card, x, y):
 
-        # set the position of the card inside the card object
-        card.setPosition(card.ox, card.oy)
-        # put the card on the screen
-        self.putCard(card, x, y)
+        #self._screen.fill((0, 0, 0))
+        for i in range(0, 6):
+            print("Slot " + str(i))
+            for index, currentCard in enumerate(self._cardSlots[i]):
+                self.putCard(currentCard, currentCard.ox, currentCard.oy)
+
+        #         if currentCard != card:
+        #             # set the position of the card inside the card object
+        #             currentCard.setPosition(self._xSpaceBetweenCards *
+        #                                     i + 20, index * self._ySpaceBetweenCards + 20)
+        #             currentCard.calculateRect()
+        #             # put the card on the screen
+        #             self.putCard(currentCard, self._xSpaceBetweenCards * i +
+        #                          20, index * self._ySpaceBetweenCards + 20, faceUp)
+        # # set the position of the card inside the card object
+        # card.setPosition(card.ox, card.oy)
+        # # put the card on the screen
+        # self.putCard(card, x, y)
     """
         Print all the cards in the deck.
     """

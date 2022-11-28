@@ -13,6 +13,10 @@ class Card:
     _value = None  # value of the card
     _symbol = None  # symbol of the card
     _rect = None  # rectangle of the card
+    _faceUp = False  # if the card is faced up or not
+
+    def setFaceUp(self, faceUp):
+        self._faceUp = faceUp
 
     """
         Draw the card on the screen.
@@ -50,13 +54,14 @@ class Card:
         Constructor
     """
 
-    def __init__(self, picture, color, value, symbol):
+    def __init__(self, picture, color, value, symbol, faceUp=False):
         print(picture)
         self._picture = picture
         self._imageLoad = pygame.image.load(picture)
         self._color = color
         self._value = value
         self._symbol = symbol
+        self._faceUp = faceUp
 
     """
         Getter for the picture
