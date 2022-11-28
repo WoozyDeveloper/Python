@@ -15,6 +15,17 @@ class Card:
     _rect = None  # rectangle of the card
     _faceUp = False  # if the card is faced up or not
 
+    """
+        Getter to see if the card is faced up or not
+    """
+
+    def isFacedUp(self):
+        return self._faceUp
+
+    """
+        Set the card faced up or faced down.
+    """
+
     def setFaceUp(self, faceUp):
         self._faceUp = faceUp
 

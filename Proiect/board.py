@@ -23,6 +23,20 @@ class Board:
     _cards = []  # deck of cards
     _cardSlots = []  # the 6 slots with cards
 
+    def placeCardInSlot(self, fromSlot, toSlot, card):
+
+        # TODO: validate the move
+        # remove the card from the slot
+
+        if card != (-1, -1):
+            print("INFO")
+            print('from:', fromSlot, ', to: ', toSlot)
+            if card in self._cardSlots[fromSlot]:
+                self._cardSlots[fromSlot].remove(card)
+                self._cardSlots[fromSlot][-1].setFaceUp(True)
+            # add the card to the slot
+            self._cardSlots[toSlot].append(card)
+
     """
         Setter method for the screen.
     """
@@ -132,21 +146,14 @@ class Board:
         for i in range(0, 6):
             print("Slot " + str(i))
             for index, currentCard in enumerate(self._cardSlots[i]):
-                # if card != currentCard:
-                self.putCard(currentCard, currentCard.ox, currentCard.oy)
+                # put on the board all the cards, except the selected one (the one that is being moved)
+                if card != currentCard:
+                    self.putCard(currentCard, currentCard.ox,
+                                 currentCard.oy, currentCard.isFacedUp())
 
-        #         if currentCard != card:
-        #             # set the position of the card inside the card object
-        #             currentCard.setPosition(self._xSpaceBetweenCards *
-        #                                     i + 20, index * self._ySpaceBetweenCards + 20)
-        #             currentCard.calculateRect()
-        #             # put the card on the screen
-        #             self.putCard(currentCard, self._xSpaceBetweenCards * i +
-        #                          20, index * self._ySpaceBetweenCards + 20, faceUp)
-        # # set the position of the card inside the card object
-        # card.setPosition(card.ox, card.oy)
-        # # put the card on the screen
-        # self.putCard(card, x, y)
+        self.putCard(card, card.ox,
+                     card.oy, card.isFacedUp())  # place the moving card for that frame on the board
+
     """
         Print all the cards in the deck.
     """
@@ -166,7 +173,7 @@ class Board:
         card = card
 
         # if the card is face up, we get the image of the card
-        if faceUp:
+        if card.isFacedUp():
             cardImage = card.getPicture()
         else:
             # else we print the back of the card
