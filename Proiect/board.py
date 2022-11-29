@@ -23,19 +23,31 @@ class Board:
     _cards = []  # deck of cards
     _cardSlots = []  # the 6 slots with cards
 
+    def aproximatePositionCardToSlot(self, card, slotIndex):
+        referencePosition = self._cardSlots[slotIndex][0].getPosition()
+        card.setPosition(referencePosition[0], referencePosition[1] +
+                         self._ySpaceBetweenCards * len(self._cardSlots[slotIndex]))
+
+    """
+        Place the card in the new slot
+            - remove the card from the old slot
+            - add the card to the new slot
+    """
+
     def placeCardInSlot(self, fromSlot, toSlot, card):
 
         # TODO: validate the move
         # remove the card from the slot
-
-        if card != (-1, -1):
-            print("INFO")
-            print('from:', fromSlot, ', to: ', toSlot)
-            if card in self._cardSlots[fromSlot]:
-                self._cardSlots[fromSlot].remove(card)
-                self._cardSlots[fromSlot][-1].setFaceUp(True)
-            # add the card to the slot
-            self._cardSlots[toSlot].append(card)
+        if toSlot != -1:
+            if card != (-1, -1):
+                print("INFO")
+                print('from:', fromSlot, ', to: ', toSlot)
+                if card in self._cardSlots[fromSlot]:
+                    self._cardSlots[fromSlot].remove(card)
+                    self._cardSlots[fromSlot][-1].setFaceUp(True)
+                # add the card to the slot
+                self._cardSlots[toSlot].append(card)
+                self.aproximatePositionCardToSlot(card, toSlot)
 
     """
         Setter method for the screen.

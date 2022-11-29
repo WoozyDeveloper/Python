@@ -16,6 +16,14 @@ class Card:
     _faceUp = False  # if the card is faced up or not
 
     """
+        Getter for the position of the card.
+        Returns a tuple (x, y).
+    """
+
+    def getPosition(self):
+        return (self.ox, self.oy)
+
+    """
         Getter to see if the card is faced up or not
     """
 

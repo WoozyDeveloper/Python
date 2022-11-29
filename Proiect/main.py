@@ -6,7 +6,7 @@ from board import Board
 pygame.init()
 pygame.display.set_caption('Solitaire')
 
-(width, height) = (1920, 1080)
+(width, height) = (1800, 900)
 screen = pygame.display.set_mode((width, height))
 
 running = True
