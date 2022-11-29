@@ -44,14 +44,17 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
-                if card != (0, 0) and rectangle_draging:
+                if card != (0, 0) and rectangle_draging and droppedAt != -1:
                     board.placeCardInSlot(takenFrom, droppedAt, card)
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])
                     print("GATA STOP")
                     print(droppedAt)
                     print("GATA STOP")
-
+                else:
+                    board.placeCardInSlot(takenFrom, takenFrom, card)
+                    screen.fill((0, 0, 0))
+                    board.redrawBoard(card, pos[0], pos[1])
                 rectangle_draging = False
 
         # moving the card
@@ -63,9 +66,5 @@ while running:
                     board.redrawBoard(card, pos[0], pos[1])
 
     pygame.display.flip()
-    # update the screen
-    # if card != (0, 0) and rectangle_draging:
-
-    # constant frame rate
     clock = pygame.time.Clock()
     clock.tick(60)
