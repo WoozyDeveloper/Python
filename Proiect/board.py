@@ -23,10 +23,42 @@ class Board:
     _cards = []  # deck of cards
     _cardSlots = []  # the 6 slots with cards
 
+    def printSlots(self):
+        for i in range(0, 6):
+            print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
+            for card in self._cardSlots[i]:
+                print(card)
+            print("")
+
+    """
+        Returns the number of cards in the slot
+    """
+
+    def cardsInSlot(self, slot):
+        return len(self._cardSlots[slot])
+
+    """
+        Swap the last card to let the player see it.
+    """
+
+    def reverseLastMove(self, slot):
+        if len(self._cardSlots[slot]) > 1:
+            if (self._cardSlots[slot]):
+                self._cardSlots[slot][-2].setFaceUp(False)
+        else:
+            self._cardSlots[slot][-1].setFaceUp(False)
+
+    """
+        This method is used to put a card on the screen with the right allignment
+    """
+
     def aproximatePositionCardToSlot(self, card, slotIndex):
         referencePosition = self._cardSlots[slotIndex][0].getPosition()
-        card.setPosition(referencePosition[0], referencePosition[1] +
-                         self._ySpaceBetweenCards * len(self._cardSlots[slotIndex]))
+        if len(self._cardSlots[slotIndex]) == 1:
+            card.setPosition(referencePosition[0], referencePosition[1])
+        else:
+            card.setPosition(referencePosition[0], referencePosition[1] +
+                             self._ySpaceBetweenCards * len(self._cardSlots[slotIndex]))
 
     """
         Place the card in the new slot
@@ -36,18 +68,20 @@ class Board:
 
     def placeCardInSlot(self, fromSlot, toSlot, card):
 
-        # TODO: validate the move
-        # remove the card from the slot
-        if toSlot != -1:
-            if card != (-1, -1):
-                print("INFO")
-                print('from:', fromSlot, ', to: ', toSlot)
-                if card in self._cardSlots[fromSlot]:
+        # # TODO: validate the move
+        # # remove the card from the slot
+        if toSlot != -1 and card != -1:
+            print("INFO")
+            print('from:', fromSlot, ', to: ', toSlot)
+            if card in self._cardSlots[fromSlot]:
+                if len(self._cardSlots[fromSlot]) > 0:
                     self._cardSlots[fromSlot].remove(card)
+                print("DAU FLIP LA CARD", card, toSlot)
+                if len(self._cardSlots[fromSlot]) > 0:
                     self._cardSlots[fromSlot][-1].setFaceUp(True)
-                # add the card to the slot
-                self._cardSlots[toSlot].append(card)
-                self.aproximatePositionCardToSlot(card, toSlot)
+            # add the card to the slot
+            self._cardSlots[toSlot].append(card)
+            self.aproximatePositionCardToSlot(card, toSlot)
 
     """
         Setter method for the screen.
@@ -132,7 +166,7 @@ class Board:
 
         # print card slots and put the cards on the screen
         for i in range(0, 6):
-            print("Slot " + str(i))
+            #print("Slot " + str(i))
             for index, card in enumerate(self._cardSlots[i]):
                 if index < i:
                     faceUp = False
@@ -156,7 +190,7 @@ class Board:
 
         #self._screen.fill((0, 0, 0))
         for i in range(0, 6):
-            print("Slot " + str(i))
+            #print("Slot " + str(i))
             for index, currentCard in enumerate(self._cardSlots[i]):
                 # put on the board all the cards, except the selected one (the one that is being moved)
                 if card != currentCard:

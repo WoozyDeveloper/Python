@@ -23,6 +23,8 @@ rectangle_draging = False  # True if the user is dragging a card
 card = (0, 0)  # here we store the card that is being moved
 
 takenFrom = -1  # variable that remembers the slot from which the card was taken
+# variable that remembers the initial position of the card
+initialCardPosition = (0, 0)
 
 while running:
     pos = pygame.mouse.get_pos()
@@ -33,8 +35,11 @@ while running:
         # grabbing the card
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
+
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 card = board.detectSelectedCard(pos[0], pos[1])
+                if card != -1:
+                    initialCardPosition = card.getPosition()
                 print(card)
 
                 if card != -1:
@@ -43,18 +48,34 @@ while running:
         # releasing the card
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
+
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
+                # if the card is placed in a valid position (slot)
                 if card != (0, 0) and rectangle_draging and droppedAt != -1:
                     board.placeCardInSlot(takenFrom, droppedAt, card)
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])
-                    print("GATA STOP")
-                    print(droppedAt)
-                    print("GATA STOP")
-                else:
-                    board.placeCardInSlot(takenFrom, takenFrom, card)
+                    # print("GATA STOP")
+                    # print(droppedAt)
+                    # print("GATA STOP")
+                else:  # if the card is placed in a non-valid position (slot)
+                    print("INTRU PE NU E BN")
+                    if board.cardsInSlot(takenFrom) > 1:
+                        print("INTRU PE NU E BN 2")
+                        board.placeCardInSlot(takenFrom, takenFrom, card)
+                        board.reverseLastMove(takenFrom)
+                    else:
+                        card.setPosition(
+                            initialCardPosition[0], initialCardPosition[1])
+
+                        board.placeCardInSlot(takenFrom, takenFrom, card)
+
+                        print("IL PUN LA LOC IN: ", initialCardPosition)
                     screen.fill((0, 0, 0))
-                    board.redrawBoard(card, pos[0], pos[1])
+                    board.redrawBoard(
+                        card, initialCardPosition[0], initialCardPosition[1])
+
+                board.printSlots()
                 rectangle_draging = False
 
         # moving the card
