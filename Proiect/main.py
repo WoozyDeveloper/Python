@@ -38,16 +38,16 @@ while running:
 
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 card = board.detectSelectedCard(pos[0], pos[1])
-                if card != -1:
+                if type(card) is Card:
                     initialCardPosition = card.getPosition()
                 print(card)
 
-                if card != -1:
+                if type(card) is Card:
                     rectangle_draging = True
 
         # releasing the card
         if event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
+            if event.button == 1 and type(card) is Card:
 
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
                 # if the card is placed in a valid position (slot)
@@ -81,7 +81,7 @@ while running:
         # moving the card
         if event.type == pygame.MOUSEMOTION:
             if rectangle_draging:
-                if card != (0, 0):
+                if type(card) is Card:
                     card.setPosition(pos[0], pos[1])
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])

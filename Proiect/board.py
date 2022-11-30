@@ -22,6 +22,7 @@ class Board:
     _screen = None
     _cards = []  # deck of cards
     _cardSlots = []  # the 6 slots with cards
+    _facedUpCards = []  # cards that have their face up
 
     def printSlots(self):
         for i in range(0, 6):
@@ -43,8 +44,7 @@ class Board:
 
     def reverseLastMove(self, slot):
         if len(self._cardSlots[slot]) > 1:
-            if (self._cardSlots[slot]):
-                self._cardSlots[slot][-2].setFaceUp(False)
+            self._cardSlots[slot][-2].setFaceUp(False)
         else:
             self._cardSlots[slot][-1].setFaceUp(False)
 
@@ -58,7 +58,7 @@ class Board:
             card.setPosition(referencePosition[0], referencePosition[1])
         else:
             card.setPosition(referencePosition[0], referencePosition[1] +
-                             self._ySpaceBetweenCards * len(self._cardSlots[slotIndex]))
+                             self._ySpaceBetweenCards * (len(self._cardSlots[slotIndex]) - 1))
 
     """
         Place the card in the new slot
@@ -70,8 +70,8 @@ class Board:
 
         # # TODO: validate the move
         # # remove the card from the slot
-        if toSlot != -1 and card != -1:
-            print("INFO")
+        if toSlot != -1 and type(card) is Card:
+            print("INFO", toSlot, card)
             print('from:', fromSlot, ', to: ', toSlot)
             if card in self._cardSlots[fromSlot]:
                 if len(self._cardSlots[fromSlot]) > 0:
