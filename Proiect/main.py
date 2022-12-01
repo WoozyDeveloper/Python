@@ -6,7 +6,7 @@ from board import Board
 pygame.init()
 pygame.display.set_caption('Solitaire')
 
-(width, height) = (1800, 900)
+(width, height) = (1600, 700)
 screen = pygame.display.set_mode((width, height))
 
 running = True
@@ -50,6 +50,7 @@ while running:
 
         # releasing the card
         if event.type == pygame.MOUSEBUTTONUP:
+            # TODO multiple card bug
             if event.button == 1 and type(card) is Card:
 
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
@@ -57,7 +58,10 @@ while running:
                     droppedAt = -1
                     # if the card is placed in a valid position (slot)
                 if card != (0, 0) and rectangle_draging and droppedAt != -1:
+
                     board.placeCardInSlot(takenFrom, droppedAt, card)
+
+                    # refresh the screen
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])
 
@@ -72,6 +76,8 @@ while running:
                             initialCardPosition[0], initialCardPosition[1])
 
                         board.placeCardInSlot(takenFrom, takenFrom, card)
+
+                    # refresh the screen
                     screen.fill((0, 0, 0))
                     board.redrawBoard(
                         card, initialCardPosition[0], initialCardPosition[1])
@@ -83,6 +89,16 @@ while running:
         if event.type == pygame.MOUSEMOTION:
             if rectangle_draging:
                 if type(card) is Card:
+                    currentSlot = board.getSlot(takenFrom)
+                    # aici tre sa merg de la card in jos pana nu mai am carti si sa le setez cu un for pe rand pozitia mouse-ului
+                    for i in range(0, len(currentSlot) - 1):
+                        if currentSlot[i] == card:
+                            print('J====')
+                            for j in range(i+1, len(currentSlot)):
+                                print(j)
+                                currentSlot[j].setPosition(
+                                    pos[0], pos[1] + 20 * j)
+
                     card.setPosition(pos[0], pos[1])
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])

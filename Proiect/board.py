@@ -24,6 +24,10 @@ class Board:
     _cardSlots = []  # the 6 slots with cards
     _facedUpCards = []  # cards that have their face up
 
+    """
+        Returns the slot
+    """
+
     def getSlot(self, slot):
         return self._cardSlots[slot]
 
@@ -59,15 +63,20 @@ class Board:
 
     def aproximatePositionCardToSlot(self, card, slotIndex):
         referencePosition = self._cardSlots[slotIndex][0].getPosition()
-        if len(self._cardSlots[slotIndex]) == 1:
+        if len(self._cardSlots[slotIndex]) <= 1:
             card.setPosition(referencePosition[0], referencePosition[1])
         else:
             card.setPosition(referencePosition[0], referencePosition[1] +
                              self._ySpaceBetweenCards * (len(self._cardSlots[slotIndex]) - 1))
 
     def isMoveValid(self, card, toSlot):
-        previousCard = self._cardSlots[toSlot][-1]
+        previousCard = None
+        if len(self._cardSlots[toSlot]):
+            previousCard = self._cardSlots[toSlot][-1]
         print('MY INFO IS HERE! ', card, toSlot, previousCard)
+
+        if previousCard == None:
+            return True
         if int(previousCard.getValue()) - int(card.getValue()) != 1 or previousCard.getColor() == card.getColor():
             return False
         return True
@@ -103,16 +112,43 @@ class Board:
         self._screen = screen
 
     """
+        Check if the cards below are faced up and in the correct order according to the game
+    """
+
+    def checkCardsBelow(self, card, slot):
+        for i in range(0, len(self._cardSlots[slot]) - 1):
+            if self._cardSlots[slot][i] == card:
+                for j in range(i+1, len(self._cardSlots[slot])):
+                    card1 = self._cardSlots[slot][j-1]
+                    card2 = self._cardSlots[slot][j]
+
+                    if card1.isFacedUp() == False or card2.isFacedUp() == False or int(card1.getValue()) - int(card2.getValue()) != 1 or card1.getColor() == card2.getColor():
+                        # nu e bine
+                        return False
+                    else:
+                        # e bine
+                        return True
+        return True
+    """
         Detect the selected card
     """
 
     def detectSelectedCard(self, x, y):
         # detect the slot position
         for i in range(0, 6):
-            if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200 and y > 15 and y < self._screen.get_rect().height / 2:
+            if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200:
+                # TODO: see what card on OY is selected
+                cardsInSlot = len(self._cardSlots[i])
+                for j in range(0, cardsInSlot):
+                    if y > self._ySpaceBetweenCards * j + 15 and y < self._ySpaceBetweenCards * (j + 1) + 15:
+                        print('i=', i, 'j=', j)
+
+                        if self.checkCardsBelow(self._cardSlots[i][j], i) == True:
+                            return self._cardSlots[i][j]
                 # if we have at least a card in the slot
                 if (self._cardSlots[i]):
-                    return self._cardSlots[i][-1]  # PUNE POP AICI
+                    # PUNE POP AICI ???? #nu tin minte ce faceam
+                    return self._cardSlots[i][-1]
                 return 0  # if the slot is empty
         return -1
 
