@@ -73,7 +73,6 @@ class Board:
         previousCard = None
         if len(self._cardSlots[toSlot]):
             previousCard = self._cardSlots[toSlot][-1]
-        print('MY INFO IS HERE! ', card, toSlot, previousCard)
 
         if previousCard == None:
             return True
@@ -92,13 +91,10 @@ class Board:
         # # TODO: validate the move
         # # remove the card from the slot
         if toSlot != -1 and type(card) is Card:
-            print("INFO", toSlot, card)
-            print('from:', fromSlot, ', to: ', toSlot)
             if card in self._cardSlots[fromSlot]:
                 if len(self._cardSlots[fromSlot]) > 0:
                     self._cardSlots[fromSlot].remove(card)
                 if len(self._cardSlots[fromSlot]) > 0 and fromSlot != toSlot:
-                    print("II DAU REVERSE")
                     self._cardSlots[fromSlot][-1].setFaceUp(True)
             # add the card to the slot
             self._cardSlots[toSlot].append(card)
@@ -146,8 +142,6 @@ class Board:
                 cardsInSlot = len(self._cardSlots[i])
                 for j in range(0, cardsInSlot):
                     if y > self._ySpaceBetweenCards * j + 15 and y < self._ySpaceBetweenCards * (j + 1) + 15:
-                        print('i=', i, 'j=', j)
-
                         if self.checkCardsBelow(self._cardSlots[i][j], i) == True:
                             return self._cardSlots[i][j]
                 # if we have at least a card in the slot

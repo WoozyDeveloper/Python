@@ -95,7 +95,9 @@ while running:
                     screen.fill((0, 0, 0))
                     board.redrawBoard(
                         card, initialCardPosition[0], initialCardPosition[1])
-
+                screen.fill((0, 0, 0))
+                board.redrawBoard(
+                    card, initialCardPosition[0], initialCardPosition[1])
                 board.printSlots()
                 rectangle_draging = False
 
