@@ -112,6 +112,13 @@ class Board:
         self._screen = screen
 
     """
+        Returns the index of the card in the slot
+    """
+
+    def getCardIndexInSlot(self, card, slot):
+        return self._cardSlots[slot].index(card)
+
+    """
         Check if the cards below are faced up and in the correct order according to the game
     """
 
@@ -123,10 +130,8 @@ class Board:
                     card2 = self._cardSlots[slot][j]
 
                     if card1.isFacedUp() == False or card2.isFacedUp() == False or int(card1.getValue()) - int(card2.getValue()) != 1 or card1.getColor() == card2.getColor():
-                        # nu e bine
                         return False
                     else:
-                        # e bine
                         return True
         return True
     """
@@ -147,7 +152,7 @@ class Board:
                             return self._cardSlots[i][j]
                 # if we have at least a card in the slot
                 if (self._cardSlots[i]):
-                    # PUNE POP AICI ???? #nu tin minte ce faceam
+                    # PUNE POP AICI ???? #nu tin minte ce face asta
                     return self._cardSlots[i][-1]
                 return 0  # if the slot is empty
         return -1

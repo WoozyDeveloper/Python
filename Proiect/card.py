@@ -70,7 +70,6 @@ class Card:
     """
 
     def calculateRect(self):
-        print('INTRU')
         #self._rect = self._imageLoad.get_rect()
         self._rect = pygame.rect.Rect(self.ox - 484 / (6 * 2), self.oy - 670 /
                                       (6 * 2), self.ox + 484 / (6 * 2), self.oy + 670 / (6 * 2))

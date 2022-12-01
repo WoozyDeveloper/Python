@@ -26,6 +26,7 @@ takenFrom = -1  # variable that remembers the slot from which the card was taken
 # variable that remembers the initial position of the card
 initialCardPosition = (0, 0)
 previousCard = None
+movingCards = set()  # set of cards that are being moved
 while running:
     pos = pygame.mouse.get_pos()
     for event in pygame.event.get():
@@ -59,24 +60,37 @@ while running:
                     # if the card is placed in a valid position (slot)
                 if card != (0, 0) and rectangle_draging and droppedAt != -1:
 
+                    currentSlot = board.getSlot(droppedAt)
+
                     board.placeCardInSlot(takenFrom, droppedAt, card)
+                    for c in movingCards:
+                        board.placeCardInSlot(takenFrom, droppedAt, c)
 
                     # refresh the screen
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])
 
                 else:  # if the card is placed in a non-valid position (slot)
-                    if board.cardsInSlot(takenFrom) > 1:
-                        currentSlot = board.getSlot(takenFrom)
-                        board.placeCardInSlot(takenFrom, takenFrom, card)
-                        if previousCard.isFacedUp() == False:
-                            board.reverseLastMove(takenFrom)
-                    else:
-                        card.setPosition(
-                            initialCardPosition[0], initialCardPosition[1])
+                    # if board.cardsInSlot(takenFrom) > 1:
+                    #     #TODO: place the cards in the backend
+                    #     currentSlot = board.getSlot(takenFrom)
+                    #     board.placeCardInSlot(takenFrom, takenFrom, card)
+                    #     if previousCard.isFacedUp() == False:
+                    #         board.reverseLastMove(takenFrom)
+                    # else:
+                    #     card.setPosition(
+                    #         initialCardPosition[0], initialCardPosition[1])
 
-                        board.placeCardInSlot(takenFrom, takenFrom, card)
+                    #     board.placeCardInSlot(takenFrom, takenFrom, card)
+                    card.setPosition(
+                        initialCardPosition[0], initialCardPosition[1])
 
+                    for i in range(0, len(currentSlot) - 1):
+                        if currentSlot[i] == card:
+                            for j in range(i, len(currentSlot)):
+                                print(j)
+                                currentSlot[j].setPosition(
+                                    initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
                     # refresh the screen
                     screen.fill((0, 0, 0))
                     board.redrawBoard(
@@ -93,16 +107,16 @@ while running:
                     # aici tre sa merg de la card in jos pana nu mai am carti si sa le setez cu un for pe rand pozitia mouse-ului
                     for i in range(0, len(currentSlot) - 1):
                         if currentSlot[i] == card:
-                            print('J====')
                             for j in range(i+1, len(currentSlot)):
                                 print(j)
                                 currentSlot[j].setPosition(
-                                    pos[0], pos[1] + 20 * j)
+                                    pos[0], pos[1] + 20 * (j - i))
+                                movingCards.add(currentSlot[j])
 
                     card.setPosition(pos[0], pos[1])
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])
 
-    pygame.display.flip()
+    pygame.display.update()
     clock = pygame.time.Clock()
     clock.tick(60)
