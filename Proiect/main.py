@@ -38,7 +38,8 @@ while running:
 
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 card = board.detectSelectedCard(pos[0], pos[1])
-                previousCard = board.getSlot(takenFrom)[-2]
+                if len(board.getSlot(takenFrom)) > 1:
+                    previousCard = board.getSlot(takenFrom)[-2]
                 print('PREVIOUS CARD', previousCard)
                 if type(card) is Card:
                     initialCardPosition = card.getPosition()
@@ -52,18 +53,16 @@ while running:
             if event.button == 1 and type(card) is Card:
 
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
-                # if the card is placed in a valid position (slot)
+                if not board.isMoveValid(card, droppedAt):
+                    droppedAt = -1
+                    # if the card is placed in a valid position (slot)
                 if card != (0, 0) and rectangle_draging and droppedAt != -1:
                     board.placeCardInSlot(takenFrom, droppedAt, card)
                     screen.fill((0, 0, 0))
                     board.redrawBoard(card, pos[0], pos[1])
-                    # print("GATA STOP")
-                    # print(droppedAt)
-                    # print("GATA STOP")
+
                 else:  # if the card is placed in a non-valid position (slot)
-                    #print("INTRU PE NU E BN")
                     if board.cardsInSlot(takenFrom) > 1:
-                        #print("INTRU PE NU E BN 2")
                         currentSlot = board.getSlot(takenFrom)
                         board.placeCardInSlot(takenFrom, takenFrom, card)
                         if previousCard.isFacedUp() == False:
@@ -73,8 +72,6 @@ while running:
                             initialCardPosition[0], initialCardPosition[1])
 
                         board.placeCardInSlot(takenFrom, takenFrom, card)
-
-                        #print("IL PUN LA LOC IN: ", initialCardPosition)
                     screen.fill((0, 0, 0))
                     board.redrawBoard(
                         card, initialCardPosition[0], initialCardPosition[1])

@@ -16,6 +16,20 @@ class Card:
     _faceUp = False  # if the card is faced up or not
 
     """
+        Getter for the color
+    """
+
+    def getColor(self):
+        return self._color
+
+    """
+        Getter for the value of the card
+    """
+
+    def getValue(self):
+        return self._value
+
+    """
         Getter for the position of the card.
         Returns a tuple (x, y).
     """

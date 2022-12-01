@@ -65,6 +65,13 @@ class Board:
             card.setPosition(referencePosition[0], referencePosition[1] +
                              self._ySpaceBetweenCards * (len(self._cardSlots[slotIndex]) - 1))
 
+    def isMoveValid(self, card, toSlot):
+        previousCard = self._cardSlots[toSlot][-1]
+        print('MY INFO IS HERE! ', card, toSlot, previousCard)
+        if int(previousCard.getValue()) - int(card.getValue()) != 1 or previousCard.getColor() == card.getColor():
+            return False
+        return True
+
     """
         Place the card in the new slot
             - remove the card from the old slot
