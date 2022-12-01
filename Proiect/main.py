@@ -25,7 +25,7 @@ card = (0, 0)  # here we store the card that is being moved
 takenFrom = -1  # variable that remembers the slot from which the card was taken
 # variable that remembers the initial position of the card
 initialCardPosition = (0, 0)
-
+previousCard = None
 while running:
     pos = pygame.mouse.get_pos()
     for event in pygame.event.get():
@@ -38,6 +38,8 @@ while running:
 
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 card = board.detectSelectedCard(pos[0], pos[1])
+                previousCard = board.getSlot(takenFrom)[-2]
+                print('PREVIOUS CARD', previousCard)
                 if type(card) is Card:
                     initialCardPosition = card.getPosition()
                 print(card)
@@ -59,18 +61,20 @@ while running:
                     # print(droppedAt)
                     # print("GATA STOP")
                 else:  # if the card is placed in a non-valid position (slot)
-                    print("INTRU PE NU E BN")
+                    #print("INTRU PE NU E BN")
                     if board.cardsInSlot(takenFrom) > 1:
-                        print("INTRU PE NU E BN 2")
+                        #print("INTRU PE NU E BN 2")
+                        currentSlot = board.getSlot(takenFrom)
                         board.placeCardInSlot(takenFrom, takenFrom, card)
-                        board.reverseLastMove(takenFrom)
+                        if previousCard.isFacedUp() == False:
+                            board.reverseLastMove(takenFrom)
                     else:
                         card.setPosition(
                             initialCardPosition[0], initialCardPosition[1])
 
                         board.placeCardInSlot(takenFrom, takenFrom, card)
 
-                        print("IL PUN LA LOC IN: ", initialCardPosition)
+                        #print("IL PUN LA LOC IN: ", initialCardPosition)
                     screen.fill((0, 0, 0))
                     board.redrawBoard(
                         card, initialCardPosition[0], initialCardPosition[1])

@@ -24,12 +24,17 @@ class Board:
     _cardSlots = []  # the 6 slots with cards
     _facedUpCards = []  # cards that have their face up
 
+    def getSlot(self, slot):
+        return self._cardSlots[slot]
+
     def printSlots(self):
         for i in range(0, 6):
             print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
             for card in self._cardSlots[i]:
                 print(card)
             print("")
+
+        print("------------------------------")
 
     """
         Returns the number of cards in the slot
@@ -76,8 +81,8 @@ class Board:
             if card in self._cardSlots[fromSlot]:
                 if len(self._cardSlots[fromSlot]) > 0:
                     self._cardSlots[fromSlot].remove(card)
-                print("DAU FLIP LA CARD", card, toSlot)
-                if len(self._cardSlots[fromSlot]) > 0:
+                if len(self._cardSlots[fromSlot]) > 0 and fromSlot != toSlot:
+                    print("II DAU REVERSE")
                     self._cardSlots[fromSlot][-1].setFaceUp(True)
             # add the card to the slot
             self._cardSlots[toSlot].append(card)
