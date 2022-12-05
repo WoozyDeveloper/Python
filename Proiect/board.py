@@ -28,6 +28,9 @@ class Board:
     _indexLonelyCard = 0  # index for the remaining cards
     _extractedCard = None  # extracted card from the remaining cards
 
+    def goToNextCard(self):
+        self._indexLonelyCard += 1
+
     """
         Flip the card if you click on it
     """
@@ -435,7 +438,7 @@ class Board:
 
         # put the backwards card that allows you to get another card
         fakeCard = self.extractCard()
-        fakeCard.setFaceUp(False)
+        fakeCard.setFaceUp(True)
         self.putCard(fakeCard, 1200, 450)
 
     """

@@ -40,11 +40,11 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             if event.button == 1:
+
                 movingCards.clear()
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
-                if takenFrom == 10:
-                    print('iauiau')
-                    board.flipCard()
+                if takenFrom == 10:  # click lonely card
+                    board.goToNextCard()
                 else:
                     card = board.detectSelectedCard(pos[0], pos[1])
                     print("carrrd=", card)
