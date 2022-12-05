@@ -1,1 +1,1 @@
-detectSelectedCard
+loadCards

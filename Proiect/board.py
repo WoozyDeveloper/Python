@@ -24,6 +24,20 @@ class Board:
     _cardSlots = []  # the 6 slots with cards
     _facedUpCards = []  # cards that have their face up
     _finalSlots = dict()  # the 4 slots with the symbols
+    _remainingCards = []  # cards that are not in any slot
+
+    """
+        Calculate the remaining cards
+    """
+
+    def calculateRemainingCards(self):
+        self._remainingCards = self._cards
+        for i in range(0, 6):
+            for card in self._cardSlots[i]:
+                print(card)
+                if card in self._remainingCards:
+                    self._remainingCards.remove(card)
+        print("cards left: ", len(self._remainingCards))
 
     def __init__(self):
         # initialize the final slots where the player sorts the cards

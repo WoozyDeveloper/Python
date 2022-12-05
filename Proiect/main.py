@@ -14,7 +14,9 @@ running = True
 board = Board()
 board.setScreen(screen)
 board.loadCards()
-# board.printDeck()
+print('scriu')
+board.printDeck()
+print('scri2222u')
 
 board.shuffleDeck()  # shuffle the deck
 board.prepareBoard()  # prepare the board by placing the cards
@@ -27,6 +29,8 @@ takenFrom = -1  # variable that remembers the slot from which the card was taken
 initialCardPosition = (0, 0)
 previousCard = None
 movingCards = set()  # set of cards that are being moved
+board.calculateRemainingCards()  # calculate the remaining cards
+
 while running:
     pos = pygame.mouse.get_pos()
     for event in pygame.event.get():
@@ -35,6 +39,7 @@ while running:
 
         # grabbing the card
         if event.type == pygame.MOUSEBUTTONDOWN:
+
             if event.button == 1:
                 movingCards.clear()
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
