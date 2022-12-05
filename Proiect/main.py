@@ -29,7 +29,6 @@ takenFrom = -1  # variable that remembers the slot from which the card was taken
 initialCardPosition = (0, 0)
 previousCard = None
 movingCards = set()  # set of cards that are being moved
-board.calculateRemainingCards()  # calculate the remaining cards
 
 while running:
     pos = pygame.mouse.get_pos()
@@ -43,17 +42,21 @@ while running:
             if event.button == 1:
                 movingCards.clear()
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
-                card = board.detectSelectedCard(pos[0], pos[1])
-                print("carrrd=", card)
-                if card != -1:
-                    if len(board.getSlot(takenFrom)) > 1:
-                        previousCard = board.getSlot(takenFrom)[-2]
-                    print('PREVIOUS CARD', previousCard)
-                    if type(card) is Card:
-                        initialCardPosition = card.getPosition()
+                if takenFrom == 10:
+                    print('iauiau')
+                    board.flipCard()
+                else:
+                    card = board.detectSelectedCard(pos[0], pos[1])
+                    print("carrrd=", card)
+                    if card != -1:
+                        if len(board.getSlot(takenFrom)) > 1:
+                            previousCard = board.getSlot(takenFrom)[-2]
+                        print('PREVIOUS CARD', previousCard)
+                        if type(card) is Card:
+                            initialCardPosition = card.getPosition()
 
-                if type(card) is Card:
-                    rectangle_draging = True
+                    if type(card) is Card:
+                        rectangle_draging = True
 
         # releasing the card
         if event.type == pygame.MOUSEBUTTONUP:
@@ -77,18 +80,7 @@ while running:
                     screen.fill((0, 0, 255))
                     board.redrawBoard(movingCards, pos[0], pos[1])
 
-                else:  # if the card is placed in a non-valid position (slot)
-                    # if board.cardsInSlot(takenFrom) > 1:
-                    #     #TODO: place the cards in the backend
-                    #     currentSlot = board.getSlot(takenFrom)
-                    #     board.placeCardInSlot(takenFrom, takenFrom, card)
-                    #     if previousCard.isFacedUp() == False:
-                    #         board.reverseLastMove(takenFrom)
-                    # else:
-                    #     card.setPosition(
-                    #         initialCardPosition[0], initialCardPosition[1])
-
-                    #     board.placeCardInSlot(takenFrom, takenFrom, card)
+                else:
                     card.setPosition(
                         initialCardPosition[0], initialCardPosition[1])
 
@@ -113,7 +105,6 @@ while running:
             if rectangle_draging:
                 if type(card) is Card:
                     currentSlot = board.getSlot(takenFrom)
-                    # aici tre sa merg de la card in jos pana nu mai am carti si sa le setez cu un for pe rand pozitia mouse-ului
                     for i in range(0, len(currentSlot) - 1):
                         if currentSlot[i] == card:
                             for j in range(i+1, len(currentSlot)):

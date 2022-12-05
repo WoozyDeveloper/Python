@@ -25,6 +25,27 @@ class Board:
     _facedUpCards = []  # cards that have their face up
     _finalSlots = dict()  # the 4 slots with the symbols
     _remainingCards = []  # cards that are not in any slot
+    _indexLonelyCard = 0  # index for the remaining cards
+    _extractedCard = None  # extracted card from the remaining cards
+
+    """
+        Flip the card if you click on it
+    """
+
+    def flipCard(self):
+        # self.extractCard()
+        print('dau flip la ', self._extractedCard)
+        self._extractedCard.setFaceUp(True)
+
+    """
+        Get 1 card from the remaining cards in the deck
+    """
+
+    def extractCard(self):
+        # print(self._remainingCards)
+        self._extractedCard = self._remainingCards[self._indexLonelyCard % int(
+            len(self._remainingCards))]
+        return self._extractedCard
 
     """
         Calculate the remaining cards
@@ -243,6 +264,10 @@ class Board:
                 return 8
             elif x > 650 and x < 800:  # club
                 return 9
+
+            # one case for the backwards card that gives other cards
+            elif x > 1100 and x < 1500:
+                return 10
         return -1
 
     """
@@ -296,7 +321,7 @@ class Board:
 
         # print card slots and put the cards on the screen
         for i in range(0, 6):
-            #print("Slot " + str(i))
+            # print("Slot " + str(i))
             for index, card in enumerate(self._cardSlots[i]):
                 if index < i:
                     faceUp = False
@@ -338,12 +363,21 @@ class Board:
                         "0", "club", faceUp=True)
         self.putCard(fakeCard, 650, 550)
 
+        # put the backwards card on the screen
+        self.calculateRemainingCards()  # calculate the remaining cards
+        fakeCard = self.extractCard()
+        self.putCard(fakeCard, 1100, 550)
+
+    """
+        Redraw the board.
+    """
+
     def redrawBoard(self, movingCards, x, y):
 
-        #self._screen.fill((0, 0, 255))
+        # self._screen.fill((0, 0, 255))
 
         for i in range(0, 6):
-            #print("Slot " + str(i))
+            # print("Slot " + str(i))
             for index, currentCard in enumerate(self._cardSlots[i]):
                 # put on the board all the cards, except the selected one (the one that is being moved)
                 if currentCard not in movingCards:
@@ -398,6 +432,11 @@ class Board:
             fakeCard = Card("img/clubSymbol.png", "black",
                             "0", "club", faceUp=True)
         self.putCard(fakeCard, 650, 550)
+
+        # put the backwards card that allows you to get another card
+        fakeCard = self.extractCard()
+        fakeCard.setFaceUp(False)
+        self.putCard(fakeCard, 1200, 450)
 
     """
         Print all the cards in the deck.

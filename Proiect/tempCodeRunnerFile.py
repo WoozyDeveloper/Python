@@ -1,1 +1,1 @@
-loadCards
+prepareB
