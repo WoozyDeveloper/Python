@@ -200,7 +200,7 @@ class Board:
     """
 
     def prepareBoard(self):
-        self._screen.fill((0, 0, 0))
+        self._screen.fill((0, 0, 255))
         # create the card slots
         self._cardSlots = []
         for i in range(0, 6):
@@ -233,19 +233,47 @@ class Board:
                 # print(card)
             # print("")
 
-    def redrawBoard(self, card, x, y):
+        # put the 4 empty slots on the screen
 
-        #self._screen.fill((0, 0, 0))
+        # 1
+        fakeCard = Card("img/heartSymbol.png", "red",
+                        "0", "heart", faceUp=True)
+        self.putCard(fakeCard, 50, 500)
+
+        # 2
+        fakeCard = Card("img/diamondSymbol.png", "red",
+                        "0", "diamond", faceUp=True)
+        self.putCard(fakeCard, 250, 500)
+
+        # 3
+        fakeCard = Card("img/spadeSymbol.png", "black",
+                        "0", "heart", faceUp=True)
+        self.putCard(fakeCard, 450, 500)
+
+        # 4
+        fakeCard = Card("img/clubSymbol.png", "black",
+                        "0", "heart", faceUp=True)
+        self.putCard(fakeCard, 650, 500)
+
+    def redrawBoard(self, movingCards, x, y):
+
+        #self._screen.fill((0, 0, 255))
+
         for i in range(0, 6):
             #print("Slot " + str(i))
             for index, currentCard in enumerate(self._cardSlots[i]):
                 # put on the board all the cards, except the selected one (the one that is being moved)
-                if card != currentCard:
+                if currentCard not in movingCards:
                     self.putCard(currentCard, currentCard.ox,
                                  currentCard.oy, currentCard.isFacedUp())
 
-        self.putCard(card, card.ox,
-                     card.oy, card.isFacedUp())  # place the moving card for that frame on the board
+        myCards = list(movingCards)
+        for i in range(len(myCards)):
+            self.putCard(myCards[i], myCards[i].ox,
+                         myCards[i].oy, myCards[i].isFacedUp())
+
+        # self.putCard(card, card.ox,
+        #              card.oy, card.isFacedUp())  # place the moving card for that frame on the board
 
     """
         Print all the cards in the deck.
@@ -278,6 +306,8 @@ class Board:
         height = img.get_rect().height
         if faceUp:
             img = pygame.transform.scale(img, (width / 3, height / 3))
+            if card.getValue() == "0":
+                img = pygame.transform.scale(img, (width / 10, height / 10))
         else:
             img = pygame.transform.scale(img, (width / 6, height / 6))
         # pygame.display.update()

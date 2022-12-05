@@ -36,7 +36,7 @@ while running:
         # grabbing the card
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-
+                movingCards.clear()
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 card = board.detectSelectedCard(pos[0], pos[1])
                 if len(board.getSlot(takenFrom)) > 1:
@@ -67,8 +67,8 @@ while running:
                         board.placeCardInSlot(takenFrom, droppedAt, c)
 
                     # refresh the screen
-                    screen.fill((0, 0, 0))
-                    board.redrawBoard(card, pos[0], pos[1])
+                    screen.fill((0, 0, 255))
+                    board.redrawBoard(movingCards, pos[0], pos[1])
 
                 else:  # if the card is placed in a non-valid position (slot)
                     # if board.cardsInSlot(takenFrom) > 1:
@@ -92,12 +92,12 @@ while running:
                                 currentSlot[j].setPosition(
                                     initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
                     # refresh the screen
-                    screen.fill((0, 0, 0))
+                    screen.fill((0, 0, 255))
                     board.redrawBoard(
-                        card, initialCardPosition[0], initialCardPosition[1])
-                screen.fill((0, 0, 0))
+                        movingCards, initialCardPosition[0], initialCardPosition[1])
+                screen.fill((0, 0, 255))
                 board.redrawBoard(
-                    card, initialCardPosition[0], initialCardPosition[1])
+                    movingCards, initialCardPosition[0], initialCardPosition[1])
                 board.printSlots()
                 rectangle_draging = False
 
@@ -115,9 +115,9 @@ while running:
                                     pos[0], pos[1] + 20 * (j - i))
                                 movingCards.add(currentSlot[j])
 
-                    card.setPosition(pos[0], pos[1])
-                    screen.fill((0, 0, 0))
-                    board.redrawBoard(card, pos[0], pos[1])
+                card.setPosition(pos[0], pos[1])
+                screen.fill((0, 0, 255))
+                board.redrawBoard(movingCards, pos[0], pos[1])
 
     pygame.display.update()
     clock = pygame.time.Clock()
