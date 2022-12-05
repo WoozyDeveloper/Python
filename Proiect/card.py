@@ -15,6 +15,9 @@ class Card:
     _rect = None  # rectangle of the card
     _faceUp = False  # if the card is faced up or not
 
+    def getSymbol(self):
+        return self._symbol
+
     """
         Getter for the color
     """

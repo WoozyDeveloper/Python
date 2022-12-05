@@ -238,22 +238,22 @@ class Board:
         # 1
         fakeCard = Card("img/heartSymbol.png", "red",
                         "0", "heart", faceUp=True)
-        self.putCard(fakeCard, 50, 500)
+        self.putCard(fakeCard, 50, 550)
 
         # 2
         fakeCard = Card("img/diamondSymbol.png", "red",
                         "0", "diamond", faceUp=True)
-        self.putCard(fakeCard, 250, 500)
+        self.putCard(fakeCard, 250, 550)
 
         # 3
         fakeCard = Card("img/spadeSymbol.png", "black",
-                        "0", "heart", faceUp=True)
-        self.putCard(fakeCard, 450, 500)
+                        "0", "spade", faceUp=True)
+        self.putCard(fakeCard, 450, 550)
 
         # 4
         fakeCard = Card("img/clubSymbol.png", "black",
-                        "0", "heart", faceUp=True)
-        self.putCard(fakeCard, 650, 500)
+                        "0", "club", faceUp=True)
+        self.putCard(fakeCard, 650, 550)
 
     def redrawBoard(self, movingCards, x, y):
 
@@ -307,7 +307,16 @@ class Board:
         if faceUp:
             img = pygame.transform.scale(img, (width / 3, height / 3))
             if card.getValue() == "0":
-                img = pygame.transform.scale(img, (width / 10, height / 10))
+                div = 10
+                if card.getSymbol() == "heart":
+                    div = 8
+                elif card.getSymbol() == "diamond":
+                    div = 3
+                elif card.getSymbol() == "spade":
+                    div = 8
+                elif card.getSymbol() == "club":
+                    div = 8
+                img = pygame.transform.scale(img, (width / div, height / div))
         else:
             img = pygame.transform.scale(img, (width / 6, height / 6))
         # pygame.display.update()
