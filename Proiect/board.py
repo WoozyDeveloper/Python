@@ -81,16 +81,52 @@ class Board:
             card.setPosition(referencePosition[0], referencePosition[1] +
                              self._ySpaceBetweenCards * (len(self._cardSlots[slotIndex]) - 1))
 
-    def isMoveValid(self, card, toSlot):
-        previousCard = None
-        if len(self._cardSlots[toSlot]):
-            previousCard = self._cardSlots[toSlot][-1]
+    """
+        Checks if the move is valid
+    """
 
-        if previousCard == None:
+    def isMoveValid(self, card, toSlot):
+
+        if toSlot >= 6:  # sloturile finale
+            if toSlot == 6:
+                if self._finalSlots['heart'] == 0 and card.getValue() == 1:
+                    self._finalSlots['heart'] += 1
+                    return True
+                elif self._finalSlots['heart'] == int(card.getValue()) - 1 and card.getSymbol() == 'heart':
+                    self._finalSlots['heart'] += 1
+                    return True
+            elif toSlot == 7:
+                if self._finalSlots['diamond'] == 0 and card.getValue() == 1:
+                    self._finalSlots['heart'] += 1
+                    return True
+                elif self._finalSlots['diamond'] == int(card.getValue()) - 1 and card.getSymbol() == 'diamond':
+                    self._finalSlots['heart'] += 1
+                    return True
+            elif toSlot == 8:
+                if self._finalSlots['spade'] == 0 and card.getValue() == 1:
+                    self._finalSlots['heart'] += 1
+                    return True
+                elif self._finalSlots['spade'] == int(card.getValue()) - 1 and card.getSymbol() == 'spade':
+                    self._finalSlots['heart'] += 1
+                    return True
+            elif toSlot == 9:
+                if self._finalSlots['club'] == 0 and card.getValue() == 1:
+                    self._finalSlots['heart'] += 1
+                    return True
+                elif self._finalSlots['club'] == int(card.getValue()) - 1 and card.getSymbol() == 'club':
+                    self._finalSlots['heart'] += 1
+                    return True
+
+        else:  # sloturile de la 0 la 5
+            previousCard = None
+            if len(self._cardSlots[toSlot]):
+                previousCard = self._cardSlots[toSlot][-1]
+
+            if previousCard == None:
+                return True
+            if int(previousCard.getValue()) - int(card.getValue()) != 1 or previousCard.getColor() == card.getColor():
+                return False
             return True
-        if int(previousCard.getValue()) - int(card.getValue()) != 1 or previousCard.getColor() == card.getColor():
-            return False
-        return True
 
     """
         Place the card in the new slot
