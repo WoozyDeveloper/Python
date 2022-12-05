@@ -1,1 +1,1 @@
-detectSlotPosition
+detectSelectedCard

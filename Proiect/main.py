@@ -39,12 +39,13 @@ while running:
                 movingCards.clear()
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 card = board.detectSelectedCard(pos[0], pos[1])
-                if len(board.getSlot(takenFrom)) > 1:
-                    previousCard = board.getSlot(takenFrom)[-2]
-                print('PREVIOUS CARD', previousCard)
-                if type(card) is Card:
-                    initialCardPosition = card.getPosition()
-                print(card)
+                print("carrrd=", card)
+                if card != -1:
+                    if len(board.getSlot(takenFrom)) > 1:
+                        previousCard = board.getSlot(takenFrom)[-2]
+                    print('PREVIOUS CARD', previousCard)
+                    if type(card) is Card:
+                        initialCardPosition = card.getPosition()
 
                 if type(card) is Card:
                     rectangle_draging = True

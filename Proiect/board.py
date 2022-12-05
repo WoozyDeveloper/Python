@@ -193,19 +193,20 @@ class Board:
 
     def detectSelectedCard(self, x, y):
         # detect the slot position
-        for i in range(0, 6):
-            if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200:
-                # TODO: see what card on OY is selected
-                cardsInSlot = len(self._cardSlots[i])
-                for j in range(0, cardsInSlot):
-                    if y > self._ySpaceBetweenCards * j + 15 and y < self._ySpaceBetweenCards * (j + 1) + 15:
-                        if self.checkCardsBelow(self._cardSlots[i][j], i) == True:
-                            return self._cardSlots[i][j]
-                # if we have at least a card in the slot
-                if (self._cardSlots[i]):
-                    # PUNE POP AICI ???? #nu tin minte ce face asta
-                    return self._cardSlots[i][-1]
-                return 0  # if the slot is empty
+        if y < 500:
+            for i in range(0, 6):
+                if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200:
+                    # TODO: see what card on OY is selected
+                    cardsInSlot = len(self._cardSlots[i])
+                    for j in range(0, cardsInSlot):
+                        if y > self._ySpaceBetweenCards * j + 15 and y < self._ySpaceBetweenCards * (j + 1) + 15:
+                            if self.checkCardsBelow(self._cardSlots[i][j], i) == True:
+                                return self._cardSlots[i][j]
+                    # if we have at least a card in the slot
+                    if (self._cardSlots[i]):
+                        # PUNE POP AICI ???? #nu tin minte ce face asta
+                        return self._cardSlots[i][-1]
+                    return 0  # if the slot is empty
         return -1
 
     """
@@ -343,24 +344,45 @@ class Board:
         # self.putCard(card, card.ox,
         #              card.oy, card.isFacedUp())  # place the moving card for that frame on the board
 
-         # 1
-        fakeCard = Card("img/heartSymbol.png", "red",
-                        "0", "heart", faceUp=True)
+        heartVal = self._finalSlots['heart']
+        diamondVal = self._finalSlots['diamond']
+        spadeVal = self._finalSlots['spade']
+        clubVal = self._finalSlots['club']
+
+        # 1
+        if heartVal > 0:
+            fakeCard = Card("img/HEART-" + str(heartVal) + ".svg", "red",
+                            heartVal, "heart", faceUp=True)
+        else:
+            fakeCard = Card("img/heartSymbol.png", "red",
+                            "0", "heart", faceUp=True)
         self.putCard(fakeCard, 50, 550)
 
         # 2
-        fakeCard = Card("img/diamondSymbol.png", "red",
-                        "0", "diamond", faceUp=True)
+        if diamondVal > 0:
+            fakeCard = Card("img/DIAMOND-" + str(diamondVal) + ".svg", "red",
+                            diamondVal, "diamond", faceUp=True)
+        else:
+            fakeCard = Card("img/diamondSymbol.png", "red",
+                            "0", "heart", faceUp=True)
         self.putCard(fakeCard, 250, 550)
 
         # 3
-        fakeCard = Card("img/spadeSymbol.png", "black",
-                        "0", "spade", faceUp=True)
+        if spadeVal > 0:
+            fakeCard = Card("img/SPADE-" + str(spadeVal) + ".svg", "black",
+                            spadeVal, "spade", faceUp=True)
+        else:
+            fakeCard = Card("img/spadeSymbol.png", "black",
+                            "0", "spade", faceUp=True)
         self.putCard(fakeCard, 450, 550)
 
         # 4
-        fakeCard = Card("img/clubSymbol.png", "black",
-                        "0", "club", faceUp=True)
+        if clubVal > 0:
+            fakeCard = Card("img/CLUB-" + str(clubVal) + ".svg", "black",
+                            clubVal, "club", faceUp=True)
+        else:
+            fakeCard = Card("img/clubSymbol.png", "black",
+                            "0", "club", faceUp=True)
         self.putCard(fakeCard, 650, 550)
 
     """
