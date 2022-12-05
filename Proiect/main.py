@@ -65,7 +65,8 @@ while running:
                         board.placeCardInSlot(takenFrom, droppedAt, card)
                         for c in movingCards:
                             board.placeCardInSlot(takenFrom, droppedAt, c)
-
+                    else:
+                        board.placeCardInFinalSlot(takenFrom, droppedAt, card)
                     # refresh the screen
                     screen.fill((0, 0, 255))
                     board.redrawBoard(movingCards, pos[0], pos[1])

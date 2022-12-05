@@ -90,31 +90,23 @@ class Board:
         if toSlot >= 6:  # sloturile finale
             if toSlot == 6:
                 if self._finalSlots['heart'] == 0 and card.getValue() == 1:
-                    self._finalSlots['heart'] += 1
                     return True
                 elif self._finalSlots['heart'] == int(card.getValue()) - 1 and card.getSymbol() == 'heart':
-                    self._finalSlots['heart'] += 1
                     return True
             elif toSlot == 7:
                 if self._finalSlots['diamond'] == 0 and card.getValue() == 1:
-                    self._finalSlots['heart'] += 1
                     return True
                 elif self._finalSlots['diamond'] == int(card.getValue()) - 1 and card.getSymbol() == 'diamond':
-                    self._finalSlots['heart'] += 1
                     return True
             elif toSlot == 8:
                 if self._finalSlots['spade'] == 0 and card.getValue() == 1:
-                    self._finalSlots['heart'] += 1
                     return True
                 elif self._finalSlots['spade'] == int(card.getValue()) - 1 and card.getSymbol() == 'spade':
-                    self._finalSlots['heart'] += 1
                     return True
             elif toSlot == 9:
                 if self._finalSlots['club'] == 0 and card.getValue() == 1:
-                    self._finalSlots['heart'] += 1
                     return True
                 elif self._finalSlots['club'] == int(card.getValue()) - 1 and card.getSymbol() == 'club':
-                    self._finalSlots['heart'] += 1
                     return True
 
         else:  # sloturile de la 0 la 5
@@ -127,6 +119,23 @@ class Board:
             if int(previousCard.getValue()) - int(card.getValue()) != 1 or previousCard.getColor() == card.getColor():
                 return False
             return True
+
+    def placeCardInFinalSlot(self, fromSlot, toSlot, card):
+        if toSlot != -1 and type(card) is Card:
+            if card in self._cardSlots[fromSlot]:
+                if len(self._cardSlots[fromSlot]) > 0:
+                    self._cardSlots[fromSlot].remove(card)
+                if len(self._cardSlots[fromSlot]) > 0 and fromSlot != toSlot:
+                    self._cardSlots[fromSlot][-1].setFaceUp(True)
+            # add the card to the slot
+            if toSlot == 6:
+                self._finalSlots['heart'] += 1
+            elif toSlot == 7:
+                self._finalSlots['diamond'] += 1
+            elif toSlot == 8:
+                self._finalSlots['spade'] += 1
+            elif toSlot == 9:
+                self._finalSlots['club'] += 1
 
     """
         Place the card in the new slot
