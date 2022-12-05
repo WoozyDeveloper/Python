@@ -1,1 +1,1 @@
-_cardSlots
+detectSlotPosition

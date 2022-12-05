@@ -55,6 +55,7 @@ while running:
             if event.button == 1 and type(card) is Card:
 
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
+
                 if not board.isMoveValid(card, droppedAt):
                     droppedAt = -1
                     # if the card is placed in a valid position (slot)
@@ -92,7 +93,7 @@ while running:
                                 currentSlot[j].setPosition(
                                     initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
                     # refresh the screen
-                    screen.fill((0, 0, 255))
+                    screen.fill((0, 0, 0))
                     board.redrawBoard(
                         movingCards, initialCardPosition[0], initialCardPosition[1])
                 screen.fill((0, 0, 255))

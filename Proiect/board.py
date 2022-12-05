@@ -23,6 +23,14 @@ class Board:
     _cards = []  # deck of cards
     _cardSlots = []  # the 6 slots with cards
     _facedUpCards = []  # cards that have their face up
+    _finalSlots = dict()  # the 4 slots with the symbols
+
+    def __init__(self):
+        # initialize the final slots where the player sorts the cards
+        self._finalSlots['heart'] = 0
+        self._finalSlots['diamond'] = 0
+        self._finalSlots['spade'] = 0
+        self._finalSlots['club'] = 0
 
     """
         Returns the slot
@@ -30,6 +38,10 @@ class Board:
 
     def getSlot(self, slot):
         return self._cardSlots[slot]
+
+    """
+        Prints the values inside each slot
+    """
 
     def printSlots(self):
         for i in range(0, 6):
@@ -157,9 +169,20 @@ class Board:
 
     def detectSlotPosition(self, x, y):
         # detect the slot position
-        for i in range(0, 6):
-            if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200 and y > 15 and y < self._screen.get_rect().height / 2:
-                return i
+        if y < 500:
+            for i in range(0, 6):
+                if x > self._xSpaceBetweenCards * i + 15 and x < self._xSpaceBetweenCards * i + 200 and y > 15 and y < self._screen.get_rect().height / 2:
+                    return i
+        else:
+            # 4 cases for the 4 slots with the symbols
+            if x > 50 and x < 200:  # heart
+                return 6
+            elif x > 250 and x < 400:  # diamond
+                return 7
+            elif x > 450 and x < 600:  # spade
+                return 8
+            elif x > 650 and x < 800:  # club
+                return 9
         return -1
 
     """
@@ -274,6 +297,26 @@ class Board:
 
         # self.putCard(card, card.ox,
         #              card.oy, card.isFacedUp())  # place the moving card for that frame on the board
+
+         # 1
+        fakeCard = Card("img/heartSymbol.png", "red",
+                        "0", "heart", faceUp=True)
+        self.putCard(fakeCard, 50, 550)
+
+        # 2
+        fakeCard = Card("img/diamondSymbol.png", "red",
+                        "0", "diamond", faceUp=True)
+        self.putCard(fakeCard, 250, 550)
+
+        # 3
+        fakeCard = Card("img/spadeSymbol.png", "black",
+                        "0", "spade", faceUp=True)
+        self.putCard(fakeCard, 450, 550)
+
+        # 4
+        fakeCard = Card("img/clubSymbol.png", "black",
+                        "0", "club", faceUp=True)
+        self.putCard(fakeCard, 650, 550)
 
     """
         Print all the cards in the deck.
