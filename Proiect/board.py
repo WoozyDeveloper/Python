@@ -27,6 +27,10 @@ class Board:
     _remainingCards = []  # cards that are not in any slot
     _indexLonelyCard = 0  # index for the remaining cards
     _extractedCard = None  # extracted card from the remaining cards
+    _fakeCard = None
+
+    def getFakeCard(self):
+        return self._fakeCard
 
     def goToNextCard(self):
         self._indexLonelyCard += 1
@@ -37,7 +41,7 @@ class Board:
 
     def flipCard(self):
         # self.extractCard()
-        print('dau flip la ', self._extractedCard)
+       # print('dau flip la ', self._extractedCard)
         self._extractedCard.setFaceUp(True)
 
     """
@@ -58,10 +62,10 @@ class Board:
         self._remainingCards = self._cards
         for i in range(0, 6):
             for card in self._cardSlots[i]:
-                print(card)
+                # print(card)
                 if card in self._remainingCards:
                     self._remainingCards.remove(card)
-        print("cards left: ", len(self._remainingCards))
+        #print("cards left: ", len(self._remainingCards))
 
     def __init__(self):
         # initialize the final slots where the player sorts the cards
@@ -82,13 +86,14 @@ class Board:
     """
 
     def printSlots(self):
-        for i in range(0, 6):
-            print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
-            for card in self._cardSlots[i]:
-                print(card)
-            print("")
+        pass
+        # for i in range(0, 6):
+        #     print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
+        #     for card in self._cardSlots[i]:
+        #         print(card)
+        #     print("")
 
-        print("------------------------------")
+        # print("------------------------------")
 
     """
         Returns the number of cards in the slot
@@ -369,7 +374,7 @@ class Board:
         # put the backwards card on the screen
         self.calculateRemainingCards()  # calculate the remaining cards
         fakeCard = self.extractCard()
-        self.putCard(fakeCard, 1100, 550)
+        self.putCard(fakeCard, 1100, 700)
 
     """
         Redraw the board.
@@ -439,17 +444,18 @@ class Board:
         # put the backwards card that allows you to get another card
         fakeCard = self.extractCard()
         fakeCard.setFaceUp(True)
-        self.putCard(fakeCard, 1200, 450)
+        self.putCard(fakeCard, 1200, 600)
+       # pygame.display.update()
 
     """
         Print all the cards in the deck.
     """
 
     def printDeck(self):
-        for card in self._cards:
-            print(card)
-        print("Total cards: " + str(len(self._cards)))
-
+        pass
+        # for card in self._cards:
+        #     print(card)
+        # print("Total cards: " + str(len(self._cards)))
     """
         Place a card on the board on (ox, oy).
         A slot is a place where the player can place a card.
@@ -465,7 +471,7 @@ class Board:
         else:
             # else we print the back of the card
             cardImage = "img/BACK.png"
-        img = pygame.image.load(cardImage)
+        img = pygame.image.load(cardImage).convert_alpha()
 
         # resize the image
         width = img.get_rect().width

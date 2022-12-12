@@ -90,9 +90,9 @@ class Card:
     """
 
     def __init__(self, picture, color, value, symbol, faceUp=False):
-        print(picture)
+        # print(picture)
         self._picture = picture
-        self._imageLoad = pygame.image.load(picture)
+        self._imageLoad = pygame.image.load(picture).convert_alpha()
         self._color = color
         self._value = value
         self._symbol = symbol
