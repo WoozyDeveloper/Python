@@ -48,10 +48,10 @@ while running:
                     card = board._fakeCard
                     board.goToNextCard()
                     rectangle_draging = True
-                else:
+                if True:
                     card = board.detectSelectedCard(pos[0], pos[1])
                     #print("carrrd=", card)
-                    if card != -1:
+                    if card != -1 and card != board.getFakeCard():
                         if len(board.getSlot(takenFrom)) > 1:
                             previousCard = board.getSlot(takenFrom)[-2]
                         #print('PREVIOUS CARD', previousCard)
@@ -107,7 +107,7 @@ while running:
         # moving the card
         if event.type == pygame.MOUSEMOTION:
             if rectangle_draging:
-                if type(card) is Card:
+                if type(card) is Card and card != board.getFakeCard():
                     #print("DAU DRAG")
                     currentSlot = board.getSlot(takenFrom)
                     card.setPosition(pos[0], pos[1])
@@ -121,6 +121,13 @@ while running:
 
                     screen.fill((0, 0, 255))
                     board.redrawBoard(movingCards, pos[0], pos[1])
+                elif type(card) is Card and card == board.getFakeCard():
+                    # board.goToNextCard()
+                    print(card)
+                    card.setPosition(pos[0], pos[1])
+                    #board.getFakeCard().setPosition(pos[0], pos[1])
+                    screen.fill((0, 0, 255))
+                    board.redrawBoard(card, pos[0], pos[1])
 
     pygame.display.update()
     clock = pygame.time.Clock()

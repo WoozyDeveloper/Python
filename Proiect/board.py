@@ -190,15 +190,17 @@ class Board:
 
         # # TODO: validate the move
         # # remove the card from the slot
-        if toSlot != -1 and type(card) is Card:
+        if fromSlot == 10:
+            pass
+        elif toSlot != -1 and type(card) is Card:
             if card in self._cardSlots[fromSlot]:
                 if len(self._cardSlots[fromSlot]) > 0:
                     self._cardSlots[fromSlot].remove(card)
                 if len(self._cardSlots[fromSlot]) > 0 and fromSlot != toSlot:
                     self._cardSlots[fromSlot][-1].setFaceUp(True)
             # add the card to the slot
-            self._cardSlots[toSlot].append(card)
-            self.aproximatePositionCardToSlot(card, toSlot)
+        self._cardSlots[toSlot].append(card)
+        self.aproximatePositionCardToSlot(card, toSlot)
 
     """
         Setter method for the screen.
@@ -250,6 +252,8 @@ class Board:
                         # PUNE POP AICI ???? #nu tin minte ce face asta
                         return self._cardSlots[i][-1]
                     return 0  # if the slot is empty
+        elif y >= 500 and x > 1100 and x < 1500:
+            return self._fakeCard
         return -1
 
     """
@@ -374,6 +378,7 @@ class Board:
         # put the backwards card on the screen
         self.calculateRemainingCards()  # calculate the remaining cards
         fakeCard = self.extractCard()
+        self._fakeCard = fakeCard
         self.putCard(fakeCard, 1100, 700)
 
     """
@@ -388,14 +393,20 @@ class Board:
             # print("Slot " + str(i))
             for index, currentCard in enumerate(self._cardSlots[i]):
                 # put on the board all the cards, except the selected one (the one that is being moved)
-                if currentCard not in movingCards:
+                # movingCards has only one card
+                if type(movingCards) is Card and currentCard != movingCards:
                     self.putCard(currentCard, currentCard.ox,
                                  currentCard.oy, currentCard.isFacedUp())
-
-        myCards = list(movingCards)
-        for i in range(len(myCards)):
-            self.putCard(myCards[i], myCards[i].ox,
-                         myCards[i].oy, myCards[i].isFacedUp())
+                elif currentCard not in movingCards:
+                    self.putCard(currentCard, currentCard.ox,
+                                 currentCard.oy, currentCard.isFacedUp())
+        if type(movingCards) is Card:
+            self.putCard(movingCards, x, y, movingCards.isFacedUp())
+        else:
+            myCards = list(movingCards)
+            for i in range(len(myCards)):
+                self.putCard(myCards[i], myCards[i].ox,
+                             myCards[i].oy, myCards[i].isFacedUp())
 
         # self.putCard(card, card.ox,
         #              card.oy, card.isFacedUp())  # place the moving card for that frame on the board
