@@ -86,14 +86,13 @@ class Board:
     """
 
     def printSlots(self):
-        pass
-        # for i in range(0, 6):
-        #     print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
-        #     for card in self._cardSlots[i]:
-        #         print(card)
-        #     print("")
+        for i in range(0, 6):
+            print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
+            for card in self._cardSlots[i]:
+                print(card)
+            print("")
 
-        # print("------------------------------")
+        print("------------------------------")
 
     """
         Returns the number of cards in the slot
@@ -164,13 +163,23 @@ class Board:
             return True
 
     def placeCardInFinalSlot(self, fromSlot, toSlot, card):
-        if toSlot != -1 and type(card) is Card:
+
+        if toSlot != -1 and type(card) is Card and fromSlot != 10:
             if card in self._cardSlots[fromSlot]:
                 if len(self._cardSlots[fromSlot]) > 0:
                     self._cardSlots[fromSlot].remove(card)
                 if len(self._cardSlots[fromSlot]) > 0 and fromSlot != toSlot:
                     self._cardSlots[fromSlot][-1].setFaceUp(True)
             # add the card to the slot
+            if toSlot == 6:
+                self._finalSlots['heart'] += 1
+            elif toSlot == 7:
+                self._finalSlots['diamond'] += 1
+            elif toSlot == 8:
+                self._finalSlots['spade'] += 1
+            elif toSlot == 9:
+                self._finalSlots['club'] += 1
+        elif fromSlot == 10:
             if toSlot == 6:
                 self._finalSlots['heart'] += 1
             elif toSlot == 7:
@@ -388,25 +397,24 @@ class Board:
     def redrawBoard(self, movingCards, x, y):
 
         # self._screen.fill((0, 0, 255))
+        if type(movingCards) is Card:
+            self.putCard(movingCards, x, y, movingCards.isFacedUp())
 
         for i in range(0, 6):
             # print("Slot " + str(i))
             for index, currentCard in enumerate(self._cardSlots[i]):
                 # put on the board all the cards, except the selected one (the one that is being moved)
                 # movingCards has only one card
-                if type(movingCards) is Card and currentCard != movingCards:
-                    self.putCard(currentCard, currentCard.ox,
-                                 currentCard.oy, currentCard.isFacedUp())
-                elif currentCard not in movingCards:
-                    self.putCard(currentCard, currentCard.ox,
-                                 currentCard.oy, currentCard.isFacedUp())
-        if type(movingCards) is Card:
-            self.putCard(movingCards, x, y, movingCards.isFacedUp())
-        else:
-            myCards = list(movingCards)
-            for i in range(len(myCards)):
-                self.putCard(myCards[i], myCards[i].ox,
-                             myCards[i].oy, myCards[i].isFacedUp())
+
+                self.putCard(currentCard, currentCard.ox,
+                             currentCard.oy, currentCard.isFacedUp())
+        # if type(movingCards) is Card:
+        #     self.putCard(movingCards, x, y, movingCards.isFacedUp())
+        # else:
+        #     myCards = list(movingCards)
+        #     for i in range(len(myCards)):
+        #         self.putCard(myCards[i], myCards[i].ox,
+        #                      myCards[i].oy, myCards[i].isFacedUp())
 
         # self.putCard(card, card.ox,
         #              card.oy, card.isFacedUp())  # place the moving card for that frame on the board
@@ -455,6 +463,7 @@ class Board:
         # put the backwards card that allows you to get another card
         fakeCard = self.extractCard()
         fakeCard.setFaceUp(True)
+        self._fakeCard = fakeCard
         self.putCard(fakeCard, 1200, 600)
        # pygame.display.update()
 
@@ -463,10 +472,9 @@ class Board:
     """
 
     def printDeck(self):
-        pass
-        # for card in self._cards:
-        #     print(card)
-        # print("Total cards: " + str(len(self._cards)))
+        for card in self._cards:
+            print(card)
+        print("Total cards: " + str(len(self._cards)))
     """
         Place a card on the board on (ox, oy).
         A slot is a place where the player can place a card.

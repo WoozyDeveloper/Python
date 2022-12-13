@@ -45,7 +45,7 @@ while running:
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 if takenFrom == 10:  # click lonely card
                     print("TAP ON LONELY CARD!!!")
-                    card = board._fakeCard
+                    card = board.getFakeCard()
                     board.goToNextCard()
                     rectangle_draging = True
                 if True:
@@ -78,8 +78,9 @@ while running:
                         currentSlot = board.getSlot(droppedAt)
 
                         board.placeCardInSlot(takenFrom, droppedAt, card)
-                        for c in movingCards:
-                            board.placeCardInSlot(takenFrom, droppedAt, c)
+                        for c in range(len(movingCards)):
+                            board.placeCardInSlot(
+                                takenFrom, droppedAt, movingCards[c])
                     else:
                         board.placeCardInFinalSlot(takenFrom, droppedAt, card)
                     # refresh the screen
@@ -103,11 +104,12 @@ while running:
                     movingCards, initialCardPosition[0], initialCardPosition[1])
                 board.printSlots()
                 rectangle_draging = False
+                # board.printDeck()
 
         # moving the card
         if event.type == pygame.MOUSEMOTION:
             if rectangle_draging:
-                if type(card) is Card and card != board.getFakeCard():
+                if type(card) is Card and takenFrom != 10:
                     #print("DAU DRAG")
                     currentSlot = board.getSlot(takenFrom)
                     card.setPosition(pos[0], pos[1])
@@ -131,4 +133,4 @@ while running:
 
     pygame.display.update()
     clock = pygame.time.Clock()
-    clock.tick(180)
+    clock.tick(60)
