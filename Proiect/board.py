@@ -87,12 +87,11 @@ class Board:
     """
 
     def printSlots(self):
-        pass
-        # for i in range(0, 6):
-        #     print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
-        #     for card in self._cardSlots[i]:
-        #         print("Card= ", card)
-        #     print("")
+        for i in range(0, 6):
+            print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
+            for card in self._cardSlots[i]:
+                print("Card= ", card)
+            print("")
 
         print("------------------------------")
 

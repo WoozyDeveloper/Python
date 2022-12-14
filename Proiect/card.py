@@ -20,6 +20,11 @@ class Card:
 
     """
         Getter for the color
+        
+        Args:
+            no arguments
+        Returns:
+            returns the color of the card
     """
 
     def getColor(self):
@@ -27,6 +32,11 @@ class Card:
 
     """
         Getter for the value of the card
+
+        Args:
+            no arguments
+        Returns:
+            returns the value of the card
     """
 
     def getValue(self):
@@ -34,7 +44,11 @@ class Card:
 
     """
         Getter for the position of the card.
-        Returns a tuple (x, y).
+        
+        Args:
+            no arguments
+        Returns:
+            returns a tuple (x,y) representing the position on the screen of the card
     """
 
     def getPosition(self):
@@ -42,6 +56,11 @@ class Card:
 
     """
         Getter to see if the card is faced up or not
+
+        Args:
+            no arguments
+        Returns:
+            returns True if the card is faced up, False otherwise
     """
 
     def isFacedUp(self):
@@ -49,6 +68,11 @@ class Card:
 
     """
         Set the card faced up or faced down.
+
+        Args:
+            faceUp - value that needs to be set to the card
+        Returns:
+            void
     """
 
     def setFaceUp(self, faceUp):
@@ -56,6 +80,11 @@ class Card:
 
     """
         Draw the card on the screen.
+
+        Args:
+            no arguments
+        Returns:
+            void
     """
 
     def draw(self):
@@ -63,6 +92,11 @@ class Card:
 
     """
         Getter for the rectangle of the card.
+
+        Args:
+            no arguments
+        Returns:
+            returns the rectangle that represents the card
     """
 
     def getRect(self):
@@ -70,6 +104,11 @@ class Card:
 
     """
         Create a rect around the card
+
+        Args:
+            no arguments
+        Returns:
+            void
     """
 
     def calculateRect(self):
@@ -79,6 +118,12 @@ class Card:
 
     """
         Set the position of the card.
+
+        Args:
+            x: ox position on the screen
+            y: oy position on the screen
+        Returns:
+            void
     """
 
     def setPosition(self, x, y):
@@ -87,6 +132,15 @@ class Card:
 
     """
         Constructor
+
+        Args:
+            picture: path to the picture of the card
+            color: color of the card
+            value: value of the card
+            symbol: symbol of the card
+            faceUp: boolean value that sets the card faced up or down
+        Returns:
+            void
     """
 
     def __init__(self, picture, color, value, symbol, faceUp=False):
@@ -100,6 +154,11 @@ class Card:
 
     """
         Getter for the picture
+
+        Args:
+            no arguments
+        Returns:
+            returns the picture of the card
     """
 
     def getPicture(self):
@@ -107,6 +166,11 @@ class Card:
 
     """
         For print
+
+        Args:
+            no arguments
+        Returns:
+            returns a string with information about the card (value, color, symbol, rectangle)
     """
 
     def __str__(self):

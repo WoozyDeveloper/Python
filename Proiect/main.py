@@ -88,6 +88,7 @@ while running:
                     # refresh the screen
                     screen.fill(GREEN)
                     board.redrawBoard(movingCards, pos[0], pos[1])
+                    board.printSlots()
 
                 else:
                     card.setPosition(
@@ -112,8 +113,7 @@ while running:
         if event.type == pygame.MOUSEMOTION:
             if rectangle_draging:
                 if type(card) is Card and takenFrom != 10:
-                    print(
-                        "DAU DRAGDAU DRAGDAU DRAGDAU DRAGDAU DRAGDAU DRAGDAU DRAGDAU DRAGDAU DRAGDAU DRAG")
+
                     currentSlot = board.getSlot(takenFrom)
                     card.setPosition(pos[0], pos[1])
                     for i in range(0, len(currentSlot) - 1):
@@ -122,7 +122,8 @@ while running:
                                 # print(j)
                                 currentSlot[j].setPosition(
                                     pos[0], pos[1] + 20 * (j - i + 1))
-                                movingCards.append(currentSlot[j])
+                                if currentSlot[j] not in movingCards:
+                                    movingCards.append(currentSlot[j])
 
                     screen.fill(GREEN)
                     board.redrawBoard(movingCards, pos[0], pos[1])
