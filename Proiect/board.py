@@ -10,9 +10,7 @@ import os
 
 from card import Card
 
-
-YELLOW = (255, 255, 0)
-BLUE = (0, 0, 255)
+GREEN = (100, 150, 100)
 
 
 class Board:
@@ -118,10 +116,12 @@ class Board:
     def aproximatePositionCardToSlot(self, card, slotIndex):
         referencePosition = self._cardSlots[slotIndex][0].getPosition()
         if len(self._cardSlots[slotIndex]) <= 1:
-            card.setPosition(referencePosition[0], referencePosition[1])
+            if type(card) is Card:
+                card.setPosition(referencePosition[0], referencePosition[1])
         else:
-            card.setPosition(referencePosition[0], referencePosition[1] +
-                             self._ySpaceBetweenCards * (len(self._cardSlots[slotIndex]) - 1))
+            if type(card) is Card:
+                card.setPosition(referencePosition[0], referencePosition[1] +
+                                 self._ySpaceBetweenCards * (len(self._cardSlots[slotIndex]) - 1))
 
     """
         Checks if the move is valid
@@ -329,7 +329,7 @@ class Board:
     """
 
     def prepareBoard(self):
-        self._screen.fill((0, 0, 255))
+        self._screen.fill(GREEN)
         # create the card slots
         self._cardSlots = []
         for i in range(0, 6):
@@ -388,16 +388,16 @@ class Board:
         self.calculateRemainingCards()  # calculate the remaining cards
         fakeCard = self.extractCard()
         self._fakeCard = fakeCard
-        self.putCard(fakeCard, 1100, 700)
+        self.putCard(fakeCard, 1100, 550)
 
     """
         Redraw the board.
     """
 
-    def redrawBoard(self, movingCards, x, y):
+    def redrawBoard(self, movingCards, x, y, nextLonelyCard=False):
 
-        # self._screen.fill((0, 0, 255))
         if type(movingCards) is Card:
+            print("E CARD SI O PUN")
             self.putCard(movingCards, x, y, movingCards.isFacedUp())
 
         for i in range(0, 6):
@@ -405,9 +405,9 @@ class Board:
             for index, currentCard in enumerate(self._cardSlots[i]):
                 # put on the board all the cards, except the selected one (the one that is being moved)
                 # movingCards has only one card
-
-                self.putCard(currentCard, currentCard.ox,
-                             currentCard.oy, currentCard.isFacedUp())
+                if type(currentCard) is Card:
+                    self.putCard(currentCard, currentCard.ox,
+                                 currentCard.oy, currentCard.isFacedUp())
         # if type(movingCards) is Card:
         #     self.putCard(movingCards, x, y, movingCards.isFacedUp())
         # else:
@@ -460,11 +460,11 @@ class Board:
                             "0", "club", faceUp=True)
         self.putCard(fakeCard, 650, 550)
 
-        # put the backwards card that allows you to get another card
         fakeCard = self.extractCard()
         fakeCard.setFaceUp(True)
-        self._fakeCard = fakeCard
-        self.putCard(fakeCard, 1200, 600)
+        if nextLonelyCard:
+            self._fakeCard = fakeCard
+        self.putCard(fakeCard, 1200, 550)
        # pygame.display.update()
 
     """
