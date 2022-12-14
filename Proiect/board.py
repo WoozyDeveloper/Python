@@ -71,8 +71,6 @@ class Board:
     """
 
     def flipCard(self):
-        # self.extractCard()
-       # print('dau flip la ', self._extractedCard)
         self._extractedCard.setFaceUp(True)
 
     """
@@ -537,16 +535,6 @@ class Board:
                 if type(currentCard) is Card:
                     self.putCard(currentCard, currentCard.ox,
                                  currentCard.oy, currentCard.isFacedUp())
-        # if type(movingCards) is Card:
-        #     self.putCard(movingCards, x, y, movingCards.isFacedUp())
-        # else:
-        #     myCards = list(movingCards)
-        #     for i in range(len(myCards)):
-        #         self.putCard(myCards[i], myCards[i].ox,
-        #                      myCards[i].oy, myCards[i].isFacedUp())
-
-        # self.putCard(card, card.ox,
-        #              card.oy, card.isFacedUp())  # place the moving card for that frame on the board
 
         heartVal = self._finalSlots['heart']
         diamondVal = self._finalSlots['diamond']

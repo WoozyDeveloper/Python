@@ -16,9 +16,8 @@ running = True
 board = Board()
 board.setScreen(screen)
 board.loadCards()
-print('scriu')
+
 board.printDeck()
-print('scri2222u')
 
 board.shuffleDeck()  # shuffle the deck
 board.prepareBoard()  # prepare the board by placing the cards
@@ -46,7 +45,7 @@ while running:
                 movingCards.clear()
                 takenFrom = board.detectSlotPosition(pos[0], pos[1])
                 if takenFrom == 10:  # click lonely card
-                    print("TAP ON LONELY CARD!!!")
+                    #print("TAP ON LONELY CARD!!!")
                     card = board.getFakeCard()
 
                     rectangle_draging = True
@@ -68,7 +67,6 @@ while running:
 
         # releasing the card
         if event.type == pygame.MOUSEBUTTONUP:
-            # TODO multiple card bug
             if event.button == 1 and type(card) is Card:
                 if takenFrom == 10:
                     board.goToNextCard()
@@ -100,8 +98,8 @@ while running:
                                     print(j)
                                     currentSlot[j].setPosition(
                                         initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
-                    # refresh the screen
 
+                # refresh the screen
                 screen.fill(GREEN)
                 board.redrawBoard(
                     movingCards, initialCardPosition[0], initialCardPosition[1])
@@ -119,7 +117,6 @@ while running:
                     for i in range(0, len(currentSlot) - 1):
                         if currentSlot[i] == card:
                             for j in range(i+1, len(currentSlot)):
-                                # print(j)
                                 currentSlot[j].setPosition(
                                     pos[0], pos[1] + 20 * (j - i + 1))
                                 if currentSlot[j] not in movingCards:
@@ -128,11 +125,7 @@ while running:
                     screen.fill(GREEN)
                     board.redrawBoard(movingCards, pos[0], pos[1])
                 elif takenFrom == 10:
-                    # board.goToNextCard()
-                    print(
-                        card, "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
                     card.setPosition(pos[0], pos[1])
-                    # board.getFakeCard().setPosition(pos[0], pos[1])
                     screen.fill(GREEN)
                     board.redrawBoard(card, pos[0], pos[1])
 
