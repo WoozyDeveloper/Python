@@ -3,8 +3,6 @@ import pygame
 from card import Card
 from board import Board
 
-GREEN = (100, 150, 100)
-
 pygame.init()
 pygame.display.set_caption('Solitaire')
 
@@ -30,7 +28,7 @@ takenFrom = -1  # variable that remembers the slot from which the card was taken
 # variable that remembers the initial position of the card
 initialCardPosition = (0, 0)
 previousCard = None
-movingCards = list()  # set of cards that are being moved
+movingCards = set()  # set of cards that are being moved
 
 while running:
     pos = pygame.mouse.get_pos()
@@ -48,6 +46,7 @@ while running:
                 if takenFrom == 10:  # click lonely card
                     print("TAP ON LONELY CARD!!!")
                     card = board.getFakeCard()
+                    board.goToNextCard()
                     rectangle_draging = True
                 if True:
                     card = board.detectSelectedCard(pos[0], pos[1])
@@ -61,6 +60,7 @@ while running:
 
                     if type(card) is Card:
                         rectangle_draging = True
+                #screen.fill((0, 0, 255))
                 # pygame.display.flip()
                 board.redrawBoard(movingCards, pos[0], pos[1])
 
@@ -68,10 +68,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             # TODO multiple card bug
             if event.button == 1 and type(card) is Card:
-                if takenFrom == 10:
-                    board.goToNextCard()
-                    board.redrawBoard(
-                        card, pos[0], pos[1], nextLonelyCard=True)
+
                 droppedAt = board.detectSlotPosition(pos[0], pos[1])
                 if not board.isMoveValid(card, droppedAt):
                     droppedAt = -1
@@ -81,32 +78,32 @@ while running:
                         currentSlot = board.getSlot(droppedAt)
 
                         board.placeCardInSlot(takenFrom, droppedAt, card)
-                        for c in range(len(movingCards)):
+                        for c in movingCards:
                             board.placeCardInSlot(takenFrom, droppedAt, c)
                     else:
                         board.placeCardInFinalSlot(takenFrom, droppedAt, card)
                     # refresh the screen
-                    screen.fill(GREEN)
+                    screen.fill((0, 0, 255))
                     board.redrawBoard(movingCards, pos[0], pos[1])
 
                 else:
-                    if takenFrom != 10:
-                        card.setPosition(
-                            initialCardPosition[0], initialCardPosition[1])
-                        for i in range(0, len(currentSlot) - 1):
-                            if currentSlot[i] == card:
-                                for j in range(i, len(currentSlot)):
-                                    print(j)
-                                    currentSlot[j].setPosition(
-                                        initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
+                    card.setPosition(
+                        initialCardPosition[0], initialCardPosition[1])
+
+                    for i in range(0, len(currentSlot) - 1):
+                        if currentSlot[i] == card:
+                            for j in range(i, len(currentSlot)):
+                                print(j)
+                                currentSlot[j].setPosition(
+                                    initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
                     # refresh the screen
 
-                screen.fill(GREEN)
+                screen.fill((0, 0, 255))
                 board.redrawBoard(
                     movingCards, initialCardPosition[0], initialCardPosition[1])
                 board.printSlots()
                 rectangle_draging = False
-                # board.printDeck()
+                board.printDeck()
 
         # moving the card
         if event.type == pygame.MOUSEMOTION:
@@ -121,18 +118,17 @@ while running:
                                 # print(j)
                                 currentSlot[j].setPosition(
                                     pos[0], pos[1] + 20 * (j - i + 1))
-                                movingCards.append(currentSlot[j])
+                                movingCards.add(currentSlot[j])
 
-                    # screen.fill(GREEN)
-                    #board.redrawBoard(movingCards, pos[0], pos[1])
+                    screen.fill((0, 0, 255))
+                    board.redrawBoard(movingCards, pos[0], pos[1])
                 elif type(card) is Card and card == board.getFakeCard():
                     # board.goToNextCard()
                     print(card)
                     card.setPosition(pos[0], pos[1])
-                    board.getFakeCard().setPosition(pos[0], pos[1])
-                screen.fill(GREEN)
-                board.redrawBoard(
-                    card, pos[0], pos[1], nextLonelyCard=False)
+                    #board.getFakeCard().setPosition(pos[0], pos[1])
+                    screen.fill((0, 0, 255))
+                    board.redrawBoard(card, pos[0], pos[1])
 
     pygame.display.update()
     clock = pygame.time.Clock()

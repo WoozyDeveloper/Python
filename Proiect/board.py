@@ -27,6 +27,9 @@ class Board:
     _extractedCard = None  # extracted card from the remaining cards
     _fakeCard = None
 
+    def eliminateCard(self, card):
+        self._remainingCards.remove(card)
+
     def getFakeCard(self):
         return self._fakeCard
 
@@ -87,7 +90,7 @@ class Board:
         for i in range(0, 6):
             print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
             for card in self._cardSlots[i]:
-                print(card)
+                print("Card= ", card)
             print("")
 
         print("------------------------------")
@@ -197,11 +200,9 @@ class Board:
 
     def placeCardInSlot(self, fromSlot, toSlot, card):
 
-        # # TODO: validate the move
-        # # remove the card from the slot
         if fromSlot == 10:
             pass
-        elif toSlot != -1 and type(card) is Card:
+        elif toSlot != -1:
             if card in self._cardSlots[fromSlot]:
                 if len(self._cardSlots[fromSlot]) > 0:
                     self._cardSlots[fromSlot].remove(card)
@@ -262,6 +263,7 @@ class Board:
                         return self._cardSlots[i][-1]
                     return 0  # if the slot is empty
         elif y >= 500 and x > 1100 and x < 1500:
+            print(self._fakeCard)
             return self._fakeCard
         return -1
 
@@ -394,7 +396,7 @@ class Board:
         Redraw the board.
     """
 
-    def redrawBoard(self, movingCards, x, y, nextLonelyCard=False):
+    def redrawBoard(self, movingCards, x, y):
 
         if type(movingCards) is Card:
             print("E CARD SI O PUN")
@@ -462,8 +464,7 @@ class Board:
 
         fakeCard = self.extractCard()
         fakeCard.setFaceUp(True)
-        if nextLonelyCard:
-            self._fakeCard = fakeCard
+        self._fakeCard = fakeCard
         self.putCard(fakeCard, 1200, 550)
        # pygame.display.update()
 
