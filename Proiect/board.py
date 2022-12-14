@@ -104,6 +104,13 @@ class Board:
                 # print(card)
                 if card in self._remainingCards:
                     self._remainingCards.remove(card)
+
+        # for each final slot
+        for x in self._finalSlots:
+            for card in x:
+                if card in self._remainingCards:
+                    self._remainingCards.remove(card)
+
         #print("cards left: ", len(self._remainingCards))
 
     """
@@ -623,13 +630,13 @@ class Board:
             if card.getValue() == "0":
                 div = 10
                 if card.getSymbol() == "heart":
-                    div = 8
+                    div = 4
                 elif card.getSymbol() == "diamond":
-                    div = 3
+                    div = 4
                 elif card.getSymbol() == "spade":
-                    div = 8
+                    div = 4
                 elif card.getSymbol() == "club":
-                    div = 8
+                    div = 4
                 img = pygame.transform.scale(img, (width / div, height / div))
         else:
             img = pygame.transform.scale(img, (width / 6, height / 6))
