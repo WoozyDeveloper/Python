@@ -90,15 +90,15 @@ while running:
                     board.redrawBoard(movingCards, pos[0], pos[1])
 
                 else:
-                    card.setPosition(
-                        initialCardPosition[0], initialCardPosition[1])
-
-                    for i in range(0, len(currentSlot) - 1):
-                        if currentSlot[i] == card:
-                            for j in range(i, len(currentSlot)):
-                                print(j)
-                                currentSlot[j].setPosition(
-                                    initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
+                    if takenFrom != 10:
+                        card.setPosition(
+                            initialCardPosition[0], initialCardPosition[1])
+                        for i in range(0, len(currentSlot) - 1):
+                            if currentSlot[i] == card:
+                                for j in range(i, len(currentSlot)):
+                                    print(j)
+                                    currentSlot[j].setPosition(
+                                        initialCardPosition[0], initialCardPosition[1] + 20 * (j - i))
                     # refresh the screen
 
                 screen.fill(GREEN)
