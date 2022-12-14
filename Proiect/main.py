@@ -30,7 +30,7 @@ takenFrom = -1  # variable that remembers the slot from which the card was taken
 # variable that remembers the initial position of the card
 initialCardPosition = (0, 0)
 previousCard = None
-movingCards = list()  # set of cards that are being moved
+movingCards = list()  # list of cards that are being moved
 
 while running:
     pos = pygame.mouse.get_pos()

@@ -27,17 +27,47 @@ class Board:
     _extractedCard = None  # extracted card from the remaining cards
     _fakeCard = None
 
+    """
+        Eliminate the card from the _remainingCards
+        
+        Args:
+            card: the card that you want to remove
+
+    """
+
     def eliminateCard(self, card):
         self._remainingCards.remove(card)
 
+    """
+        Getter for the separated card
+
+        Args:
+            no arguments
+        Returns:
+            returns the card that helps the player not to get stuck
+    """
+
     def getFakeCard(self):
         return self._fakeCard
+
+    """
+        Go to the next card from the array
+
+        Args:
+            no arguments
+        Returns:
+            void
+    """
 
     def goToNextCard(self):
         self._indexLonelyCard += 1
 
     """
         Flip the card if you click on it
+        Args:
+            no arguments
+        Returns:
+            void
     """
 
     def flipCard(self):
@@ -47,6 +77,11 @@ class Board:
 
     """
         Get 1 card from the remaining cards in the deck
+
+        Args:
+            no arguments
+        Returns:
+            returns a card from the remaining cards in the deck
     """
 
     def extractCard(self):
@@ -57,6 +92,11 @@ class Board:
 
     """
         Calculate the remaining cards
+
+        Args:
+            no arguments
+        Returns:
+            void
     """
 
     def calculateRemainingCards(self):
@@ -68,6 +108,10 @@ class Board:
                     self._remainingCards.remove(card)
         #print("cards left: ", len(self._remainingCards))
 
+    """
+        Constructor
+    """
+
     def __init__(self):
         # initialize the final slots where the player sorts the cards
         self._finalSlots['heart'] = 0
@@ -77,6 +121,11 @@ class Board:
 
     """
         Returns the slot
+
+        Args:
+            slot: the slot that you want to return
+        Returns:
+            returns the selected slot
     """
 
     def getSlot(self, slot):
@@ -84,6 +133,11 @@ class Board:
 
     """
         Prints the values inside each slot
+
+        Args:
+            no arguments
+        Returns:
+            void
     """
 
     def printSlots(self):
@@ -97,23 +151,24 @@ class Board:
 
     """
         Returns the number of cards in the slot
+
+        Args:
+            slot: selected slot
+        Returns:
+            returns the length of the selected slot (the number of cards from that slot)
     """
 
     def cardsInSlot(self, slot):
         return len(self._cardSlots[slot])
 
     """
-        Swap the last card to let the player see it.
-    """
-
-    def reverseLastMove(self, slot):
-        if len(self._cardSlots[slot]) > 1:
-            self._cardSlots[slot][-2].setFaceUp(False)
-        else:
-            self._cardSlots[slot][-1].setFaceUp(False)
-
-    """
         This method is used to put a card on the screen with the right allignment
+
+        Args:
+            card: the card that you want to aproximate the position
+            slotIndex: index of the slot where you want to place the card
+        Returns:
+            void
     """
 
     def aproximatePositionCardToSlot(self, card, slotIndex):
@@ -128,6 +183,12 @@ class Board:
 
     """
         Checks if the move is valid
+
+        Args:
+            card: the card
+            toSlot: where you want to place the card
+        Returns:
+            returns a boolean value representing if the move is valid or not (True if valid, False otherwise)
     """
 
     def isMoveValid(self, card, toSlot):
@@ -165,6 +226,16 @@ class Board:
                 return False
             return True
 
+    """
+        Place the card in one of the 4 slots where the player should sort the cards
+        Args:
+            fromSlot: the slot where the card was taken from
+            toSlot: the slot where the card should be put
+            card: the card
+        Returns:
+            void
+    """
+
     def placeCardInFinalSlot(self, fromSlot, toSlot, card):
 
         if toSlot != -1 and type(card) is Card and fromSlot != 10:
@@ -196,6 +267,13 @@ class Board:
         Place the card in the new slot
             - remove the card from the old slot
             - add the card to the new slot
+
+        Args:
+            fromSlot: the slot where the card was taken from
+            toSlot: the slot where the card should be put
+            card: the card
+        Returns:
+            void
     """
 
     def placeCardInSlot(self, fromSlot, toSlot, card):
@@ -214,6 +292,11 @@ class Board:
 
     """
         Setter method for the screen.
+
+        Args:
+            screen: the screen
+        Returns:
+            void
     """
 
     def setScreen(self, screen):
@@ -221,6 +304,12 @@ class Board:
 
     """
         Returns the index of the card in the slot
+
+        Args:
+            card: the card
+            slot: the slot
+        Returns:
+            returns the index of the card in the slot
     """
 
     def getCardIndexInSlot(self, card, slot):
@@ -228,6 +317,12 @@ class Board:
 
     """
         Check if the cards below are faced up and in the correct order according to the game
+
+        Args:
+            card: the card
+            slot: the slot
+        Returns:
+            returns a boolean value that represents if the cards below 'card' are in the correct order (example: 4, 3, 2)
     """
 
     def checkCardsBelow(self, card, slot):
@@ -244,6 +339,12 @@ class Board:
         return True
     """
         Detect the selected card
+
+        Args:
+            x: ox position on the screen
+            y: oy position on the screen
+        Returns:
+            returns the card that you clicked on (according to the position (x,y))
     """
 
     def detectSelectedCard(self, x, y):
@@ -269,6 +370,12 @@ class Board:
 
     """
         Detect on which slot the card goes based on its position
+
+        Args:
+            x: ox position on the screen
+            y: oy position on the screen
+        Returns:
+            returns the index of the closest slot from the position (x,y)
     """
 
     def detectSlotPosition(self, x, y):
@@ -296,6 +403,11 @@ class Board:
     """
         Load all the cards from the img folder into a deck.
         In each card object put the corresponding picture, color, value and symbol based on the name of the file.
+
+        Args:
+            no arguments
+        Returns:
+            void
     """
 
     def loadCards(self):
@@ -320,6 +432,11 @@ class Board:
 
     """
         Shuffle the deck of cards.
+
+        Args:
+            screen: the screen
+        Returns:
+            void
     """
 
     def shuffleDeck(self):
@@ -327,7 +444,12 @@ class Board:
         random.shuffle(self._cards)
 
     """
-        ceva print cu ce face prepareBoard
+        Prepare the board by placing the cards
+
+        Args:
+            no arguments
+        Return:
+            void
     """
 
     def prepareBoard(self):
@@ -394,6 +516,11 @@ class Board:
 
     """
         Redraw the board.
+
+        Args:
+            movingCards: list of cards that are beeing moved around the board
+        Return:
+            void
     """
 
     def redrawBoard(self, movingCards, x, y):
@@ -480,6 +607,12 @@ class Board:
     """
         Place a card on the board on (ox, oy).
         A slot is a place where the player can place a card.
+
+        Args:
+            card: the card
+            ox: ox position on the screen
+            oy: oy position on the screen
+            faceUp: boolean value that represents if the card is faced up or down
     """
 
     def putCard(self, card, ox, oy, faceUp=True):
