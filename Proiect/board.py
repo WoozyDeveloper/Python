@@ -87,11 +87,12 @@ class Board:
     """
 
     def printSlots(self):
-        for i in range(0, 6):
-            print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
-            for card in self._cardSlots[i]:
-                print("Card= ", card)
-            print("")
+        pass
+        # for i in range(0, 6):
+        #     print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
+        #     for card in self._cardSlots[i]:
+        #         print("Card= ", card)
+        #     print("")
 
         print("------------------------------")
 
@@ -473,9 +474,10 @@ class Board:
     """
 
     def printDeck(self):
-        for card in self._cards:
-            print(card)
-        print("Total cards: " + str(len(self._cards)))
+        pass
+        # for card in self._cards:
+        #     print(card)
+        # print("Total cards: " + str(len(self._cards)))
     """
         Place a card on the board on (ox, oy).
         A slot is a place where the player can place a card.
