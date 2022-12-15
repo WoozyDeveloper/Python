@@ -27,39 +27,36 @@ class Board:
     _extractedCard = None  # extracted card from the remaining cards
     _fakeCard = None
 
-    """
-        Eliminate the card from the _remainingCards
-        
-        Args:
-            card: the card that you want to remove
-
-    """
-
     def eliminateCard(self, card):
+        """
+            Eliminate the card from the _remainingCards
+
+            Args:
+                card: the card that you want to remove
+
+        """
         self._remainingCards.remove(card)
 
-    """
-        Getter for the separated card
-
-        Args:
-            no arguments
-        Returns:
-            returns the card that helps the player not to get stuck
-    """
-
     def getFakeCard(self):
+        """
+            Getter for the separated card
+
+            Args:
+                no arguments
+            Returns:
+                returns the card that helps the player not to get stuck
+        """
         return self._fakeCard
 
-    """
-        Go to the next card from the array
-
-        Args:
-            no arguments
-        Returns:
-            void
-    """
-
     def goToNextCard(self):
+        """
+            Go to the next card from the array
+
+            Args:
+                no arguments
+            Returns:
+                void
+        """
         self._indexLonelyCard += 1
 
     """
@@ -71,33 +68,32 @@ class Board:
     """
 
     def flipCard(self):
+
         self._extractedCard.setFaceUp(True)
 
-    """
-        Get 1 card from the remaining cards in the deck
-
-        Args:
-            no arguments
-        Returns:
-            returns a card from the remaining cards in the deck
-    """
-
     def extractCard(self):
+        """
+            Get 1 card from the remaining cards in the deck
+
+            Args:
+                no arguments
+            Returns:
+                returns a card from the remaining cards in the deck
+        """
         # print(self._remainingCards)
         self._extractedCard = self._remainingCards[self._indexLonelyCard % int(
             len(self._remainingCards))]
         return self._extractedCard
 
-    """
-        Calculate the remaining cards
-
-        Args:
-            no arguments
-        Returns:
-            void
-    """
-
     def calculateRemainingCards(self):
+        """
+            Calculate the remaining cards
+
+            Args:
+                no arguments
+            Returns:
+                void
+        """
         self._remainingCards = self._cards
         for i in range(0, 6):
             for card in self._cardSlots[i]:
@@ -113,39 +109,36 @@ class Board:
 
         #print("cards left: ", len(self._remainingCards))
 
-    """
-        Constructor
-    """
-
     def __init__(self):
+        """
+            Constructor
+        """
         # initialize the final slots where the player sorts the cards
         self._finalSlots['heart'] = 0
         self._finalSlots['diamond'] = 0
         self._finalSlots['spade'] = 0
         self._finalSlots['club'] = 0
 
-    """
-        Returns the slot
-
-        Args:
-            slot: the slot that you want to return
-        Returns:
-            returns the selected slot
-    """
-
     def getSlot(self, slot):
+        """
+            Returns the slot
+
+            Args:
+                slot: the slot that you want to return
+            Returns:
+                returns the selected slot
+        """
         return self._cardSlots[slot]
 
-    """
-        Prints the values inside each slot
-
-        Args:
-            no arguments
-        Returns:
-            void
-    """
-
     def printSlots(self):
+        """
+            Prints the values inside each slot
+
+            Args:
+                no arguments
+            Returns:
+                void
+        """
         for i in range(0, 6):
             print("Slot " + str(i) + " " + str(len(self._cardSlots[i])))
             for card in self._cardSlots[i]:
@@ -154,29 +147,27 @@ class Board:
 
         print("------------------------------")
 
-    """
-        Returns the number of cards in the slot
-
-        Args:
-            slot: selected slot
-        Returns:
-            returns the length of the selected slot (the number of cards from that slot)
-    """
-
     def cardsInSlot(self, slot):
+        """
+            Returns the number of cards in the slot
+
+            Args:
+                slot: selected slot
+            Returns:
+                returns the length of the selected slot (the number of cards from that slot)
+        """
         return len(self._cardSlots[slot])
 
-    """
-        This method is used to put a card on the screen with the right allignment
-
-        Args:
-            card: the card that you want to aproximate the position
-            slotIndex: index of the slot where you want to place the card
-        Returns:
-            void
-    """
-
     def aproximatePositionCardToSlot(self, card, slotIndex):
+        """
+            This method is used to put a card on the screen with the right allignment
+
+            Args:
+                card: the card that you want to aproximate the position
+                slotIndex: index of the slot where you want to place the card
+            Returns:
+                void
+        """
         referencePosition = self._cardSlots[slotIndex][0].getPosition()
         if len(self._cardSlots[slotIndex]) <= 1:
             if type(card) is Card:
@@ -186,18 +177,16 @@ class Board:
                 card.setPosition(referencePosition[0], referencePosition[1] +
                                  self._ySpaceBetweenCards * (len(self._cardSlots[slotIndex]) - 1))
 
-    """
-        Checks if the move is valid
-
-        Args:
-            card: the card
-            toSlot: where you want to place the card
-        Returns:
-            returns a boolean value representing if the move is valid or not (True if valid, False otherwise)
-    """
-
     def isMoveValid(self, card, toSlot):
+        """
+            Checks if the move is valid
 
+            Args:
+                card: the card
+                toSlot: where you want to place the card
+            Returns:
+                returns a boolean value representing if the move is valid or not (True if valid, False otherwise)
+        """
         if toSlot >= 6:  # sloturile finale
             if toSlot == 6:
                 if self._finalSlots['heart'] == 0 and card.getValue() == 1:
@@ -307,30 +296,28 @@ class Board:
     def setScreen(self, screen):
         self._screen = screen
 
-    """
-        Returns the index of the card in the slot
-
-        Args:
-            card: the card
-            slot: the slot
-        Returns:
-            returns the index of the card in the slot
-    """
-
     def getCardIndexInSlot(self, card, slot):
+        """
+            Returns the index of the card in the slot
+
+            Args:
+                card: the card
+                slot: the slot
+            Returns:
+                returns the index of the card in the slot
+        """
         return self._cardSlots[slot].index(card)
 
-    """
-        Check if the cards below are faced up and in the correct order according to the game
-
-        Args:
-            card: the card
-            slot: the slot
-        Returns:
-            returns a boolean value that represents if the cards below 'card' are in the correct order (example: 4, 3, 2)
-    """
-
     def checkCardsBelow(self, card, slot):
+        """
+            Check if the cards below are faced up and in the correct order according to the game
+
+            Args:
+                card: the card
+                slot: the slot
+            Returns:
+                returns a boolean value that represents if the cards below 'card' are in the correct order (example: 4, 3, 2)
+        """
         for i in range(0, len(self._cardSlots[slot]) - 1):
             if self._cardSlots[slot][i] == card:
                 for j in range(i+1, len(self._cardSlots[slot])):
@@ -342,17 +329,17 @@ class Board:
                     else:
                         return True
         return True
-    """
-        Detect the selected card
-
-        Args:
-            x: ox position on the screen
-            y: oy position on the screen
-        Returns:
-            returns the card that you clicked on (according to the position (x,y))
-    """
 
     def detectSelectedCard(self, x, y):
+        """
+            Detect the selected card
+
+            Args:
+                x: ox position on the screen
+                y: oy position on the screen
+            Returns:
+                returns the card that you clicked on (according to the position (x,y))
+        """
         # detect the slot position
         if y < 500:
             for i in range(0, 6):
@@ -373,17 +360,16 @@ class Board:
             return self._fakeCard
         return -1
 
-    """
-        Detect on which slot the card goes based on its position
-
-        Args:
-            x: ox position on the screen
-            y: oy position on the screen
-        Returns:
-            returns the index of the closest slot from the position (x,y)
-    """
-
     def detectSlotPosition(self, x, y):
+        """
+            Detect on which slot the card goes based on its position
+
+            Args:
+                x: ox position on the screen
+                y: oy position on the screen
+            Returns:
+                returns the index of the closest slot from the position (x,y)
+        """
         # detect the slot position
         if y < 500:
             for i in range(0, 6):
@@ -405,17 +391,16 @@ class Board:
                 return 10
         return -1
 
-    """
-        Load all the cards from the img folder into a deck.
-        In each card object put the corresponding picture, color, value and symbol based on the name of the file.
-
-        Args:
-            no arguments
-        Returns:
-            void
-    """
-
     def loadCards(self):
+        """
+            Load all the cards from the img folder into a deck.
+            In each card object put the corresponding picture, color, value and symbol based on the name of the file.
+
+            Args:
+                no arguments
+            Returns:
+                void
+        """
         # go through all the files in the img folder
         for file in os.listdir("img"):
             if file.endswith(".svg"):  # file is a .svg
@@ -435,20 +420,20 @@ class Board:
                 # add the card to the deck
                 self._cards.append(card)
 
-    """
-        Shuffle the deck of cards.
-
-        Args:
-            screen: the screen
-        Returns:
-            void
-    """
-
     def shuffleDeck(self):
+        """
+           Shuffle the deck of cards.
+
+           Args:
+               screen: the screen
+           Returns:
+               void
+       """
         # shuffle the deck of cards
         random.shuffle(self._cards)
 
-    """
+    def prepareBoard(self):
+        """
         Prepare the board by placing the cards
 
         Args:
@@ -456,8 +441,6 @@ class Board:
         Return:
             void
     """
-
-    def prepareBoard(self):
         self._screen.fill(GREEN)
         # create the card slots
         self._cardSlots = []
@@ -519,16 +502,15 @@ class Board:
         self._fakeCard = fakeCard
         self.putCard(fakeCard, 1100, 550)
 
-    """
-        Redraw the board.
-
-        Args:
-            movingCards: list of cards that are beeing moved around the board
-        Return:
-            void
-    """
-
     def redrawBoard(self, movingCards, x, y):
+        """
+            Redraw the board.
+
+            Args:
+                movingCards: list of cards that are beeing moved around the board
+            Return:
+                void
+        """
 
         if type(movingCards) is Card:
             print("E CARD SI O PUN")
@@ -590,27 +572,26 @@ class Board:
         self.putCard(fakeCard, 1200, 550)
        # pygame.display.update()
 
-    """
-        Print all the cards in the deck.
-    """
-
     def printDeck(self):
+        """
+            Print all the cards in the deck.
+        """
         pass
         # for card in self._cards:
         #     print(card)
         # print("Total cards: " + str(len(self._cards)))
-    """
-        Place a card on the board on (ox, oy).
-        A slot is a place where the player can place a card.
-
-        Args:
-            card: the card
-            ox: ox position on the screen
-            oy: oy position on the screen
-            faceUp: boolean value that represents if the card is faced up or down
-    """
 
     def putCard(self, card, ox, oy, faceUp=True):
+        """
+            Place a card on the board on (ox, oy).
+            A slot is a place where the player can place a card.
+
+            Args:
+                card: the card
+                ox: ox position on the screen
+                oy: oy position on the screen
+                faceUp: boolean value that represents if the card is faced up or down
+        """
         # load the image
         card = card
 
